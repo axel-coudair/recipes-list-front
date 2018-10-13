@@ -40,9 +40,6 @@ class RecipesList extends Component {
                 >
                     <Grid
                         container
-                        direction="row"
-                        justify="center"
-                        alignItems="flex-start"
                         item md={9}
                     >
                         {/*<Grid item md={4} sm={6}>*/}
