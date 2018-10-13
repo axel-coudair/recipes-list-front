@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Typography from "@material-ui/core/Typography/Typography";
 import Card from "@material-ui/core/Card/Card";
@@ -13,7 +13,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
 import "./style.css"
 
-;
+    ;
+
 // import './App.css';
 
 class CardRecipes extends Component {
@@ -22,7 +23,7 @@ class CardRecipes extends Component {
     };
 
     handleExpandClick = () => {
-        this.setState(state => ({ expanded: !state.expanded }));
+        this.setState(state => ({expanded: !state.expanded}));
     };
 
     render() {
@@ -31,7 +32,7 @@ class CardRecipes extends Component {
                 <CardHeader
                     action={
                         <IconButton>
-                            <MoreVertIcon />
+                            <MoreVertIcon/>
                         </IconButton>
                     }
                     title={this.props.recipe.title}
@@ -52,10 +53,10 @@ class CardRecipes extends Component {
                     // className={classes.actions}
                     disableActionSpacing>
                     <IconButton aria-label="Add to favorites">
-                        <FavoriteIcon />
+                        <FavoriteIcon/>
                     </IconButton>
                     <IconButton aria-label="Share">
-                        <ShareIcon />
+                        <ShareIcon/>
                     </IconButton>
                     <IconButton
                         // className={classnames(classes.expand, {
@@ -65,7 +66,7 @@ class CardRecipes extends Component {
                         aria-expanded={this.state.expanded}
                         aria-label="Show more"
                     >
-                        <ExpandMoreIcon />
+                        <ExpandMoreIcon/>
                     </IconButton>
                 </CardActions>
                 <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>

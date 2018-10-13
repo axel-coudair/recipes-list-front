@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import AppBar from "@material-ui/core/AppBar/AppBar";
 import Toolbar from "@material-ui/core/Toolbar/Toolbar";
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
+
 // import './App.css';
 
 class Header extends Component {
@@ -15,10 +16,10 @@ class Header extends Component {
                     <IconButton
                         // className={classes.menuButton}
                         color="inherit" aria-label="Menu">
-                        <MenuIcon />
+                        <MenuIcon/>
                     </IconButton>
                     <Typography variant="h6" color="inherit"
-                                // className={classes.grow}
+                        // className={classes.grow}
                     >
                         News
                     </Typography>
