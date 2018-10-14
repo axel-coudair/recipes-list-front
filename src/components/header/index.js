@@ -5,6 +5,8 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
+import Login from "../login";
+import Register from "../register";
 
 // import './App.css';
 
@@ -21,9 +23,10 @@ class Header extends Component {
                     <Typography variant="h6" color="inherit"
                         // className={classes.grow}
                     >
-                        News
+                        My Recipes List
                     </Typography>
-                    <Button color="inherit">Login</Button>
+                    <Login/>
+                    <Register/>
                 </Toolbar>
             </AppBar>
         );
