@@ -5,11 +5,13 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
+import {login} from "../../services/auth"
 
 // import './App.css';
 
 class Header extends Component {
     render() {
+        login("axel4@axel4.com", "axel4")
         return (
             <AppBar position="static">
                 <Toolbar>
