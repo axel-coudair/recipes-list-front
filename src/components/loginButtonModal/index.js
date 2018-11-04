@@ -3,13 +3,12 @@ import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
-import {auth} from "../../firebase";
-
-// import './App.css';
+import { login } from '../../services/auth';
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
+
 const INITIAL_STATE = {
     email: '',
     password: '',
@@ -18,9 +17,7 @@ const INITIAL_STATE = {
 
 class Login extends Component {
     state = {
-        open: false,
-        pseudo: "",
-        password: ""
+        ...INITIAL_STATE
     };
 
     handleOpen = () => {
@@ -36,22 +33,21 @@ class Login extends Component {
             email,
             password,
         } = this.state;
+        event.preventDefault();
 
-        auth.doSignInWithEmailAndPassword(email, password)
-            .then(() => {
+        login(email, password)
+            .then(result => {
                 this.setState({ ...INITIAL_STATE });
-                console.log("happy");
+                console.log("result");
+                console.log(result);
                 // history.push(routes.HOME);
             })
-            .catch(error => {
+            .catch((error) => {
                 this.setState(byPropKey('error', error));
             });
-
-        event.preventDefault();
     }
 
     render() {
-
         const {
             email,
             password,
@@ -98,7 +94,7 @@ class Login extends Component {
                         />
                         <input type="submit" value="Submit" />
 
-                        { error && <p>{error.message}</p> }
+                        { error && <p>{error.response.data.message}</p> }
                     </form>
                 </div>
                 </Modal>

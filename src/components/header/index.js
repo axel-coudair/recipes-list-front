@@ -14,7 +14,6 @@ import {login} from "../../services/auth"
 
 class Header extends Component {
     render() {
-        login("axel4@axel4.com", "axel4")
         return (
             <AppBar position="static">
                 <Toolbar>
