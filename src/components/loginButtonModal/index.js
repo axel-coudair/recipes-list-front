@@ -4,6 +4,7 @@ import Typography from "@material-ui/core/Typography/Typography";
 import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
 import { login } from '../../services/auth';
+import "./style.css"
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -40,10 +41,10 @@ class Login extends Component {
                 this.setState({ ...INITIAL_STATE });
                 console.log("result");
                 console.log(result);
-                // history.push(routes.HOME);
+                // history.push("/");
             })
             .catch((error) => {
-                this.setState(byPropKey('error', error));
+                this.setState(byPropKey('error', error.response.data));
             });
     }
 
@@ -63,38 +64,37 @@ class Login extends Component {
                     aria-describedby="simple-modal-description"
                     open={this.state.open}
                     onClose={this.handleClose}
-                ><div
-                    style={{position: "absolute",
-                        width:  500,
-                        backgroundColor: "#FF0"}}>
-                    {/*className={classes.paper}>*/}
+                >
+                <div className="modal-style" >
                     <Typography variant="h6" id="modal-title">
-                        Register
+                        Login
                     </Typography>
-                    <Typography variant="subtitle1" id="simple-modal-description">
-                        Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                    </Typography>
+                    {/* <Typography variant="subtitle1" id="simple-modal-description">
+                        Fill it with your credentiels
+                    </Typography> */}
                     <form onSubmit={this.onSubmit}>
                         <TextField
                             id="standard-name"
-                            label="email"
+                            label="Email"
                             // className={classes.textField}
                             value={email}
                             onChange={event => this.setState(byPropKey('email', event.target.value))}
                             margin="normal"
+                            className="modal-form-style"
                         />
                         <TextField
                             id="standard-uncontrolled"
                             label="Password"
                             value={password}
                             type="password"
-                            // className={classes.textField}
+                            className="modal-form-style"
                             onChange={event => this.setState(byPropKey('password', event.target.value))}
                             margin="normal"
                         />
-                        <input type="submit" value="Submit" />
-
-                        { error && <p>{error.response.data.message}</p> }
+                        <Button variant="contained" color="primary" type="submit" value="Submit">
+                            Submit
+                        </Button>
+                        { error && <p>{error.message}</p> }
                     </form>
                 </div>
                 </Modal>

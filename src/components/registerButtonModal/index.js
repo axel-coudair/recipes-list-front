@@ -68,22 +68,18 @@ class Register extends Component {
                     open={this.state.open}
                     onClose={this.handleClose}
                 >
-                    <div
-                        style={{position: "absolute",
-                            width:  500,
-                            backgroundColor: "#FF0"}}>
-                        {/*className={classes.paper}>*/}
+                    <div className="modal-style" >
                         <Typography variant="h6" id="modal-title">
                             Register
                         </Typography>
-                        <Typography variant="subtitle1" id="simple-modal-description">
-                            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                        </Typography>
+                        {/* <Typography variant="subtitle1" id="simple-modal-description">
+                            Re
+                        </Typography> */}
                         <form onSubmit={this.handleSubmit}>
                             <TextField
                                 id="standard-name"
                                 label="email"
-                                // className={classes.textField}
+                            className="modal-form-style"
                                 value={email}
                                 onChange={event => this.setState(byPropKey('email', event.target.value))}
                                 margin="normal"
@@ -91,7 +87,7 @@ class Register extends Component {
                             <TextField
                                 id="standard-name"
                                 label="username"
-                                // className={classes.textField}
+                            className="modal-form-style"
                                 value={username}
                                 onChange={event => this.setState(byPropKey('username', event.target.value))}
                                 margin="normal"
@@ -101,7 +97,7 @@ class Register extends Component {
                                 label="Password"
                                 value={passwordOne}
                                 type="password"
-                                // className={classes.textField}
+                            className="modal-form-style"
                                 onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
                                 margin="normal"
                             />
@@ -110,11 +106,13 @@ class Register extends Component {
                                 label="Password conf"
                                 value={passwordTwo}
                                 type="password"
-                                // className={classes.textField}
+                            className="modal-form-style"
                                 onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
                                 margin="normal"
                             />
-                            <input type="submit" value="Submit" />
+                            <Button variant="contained" color="primary" type="submit" value="Submit">
+                            Submit
+                        </Button>
 
                             { error && <p>{error.message}</p> }
                         </form>

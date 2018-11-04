@@ -1,0 +1,13 @@
+.modal-style{
+    top: 50%;
+    left: 50%;
+    background-color: #FFF;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-shadow: 5;
+    padding: 30px;
+}
+
+.modal-form-style{
+    width: 100%
+}
