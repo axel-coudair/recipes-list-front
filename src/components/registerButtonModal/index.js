@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
-import {auth} from "../../firebase";
+import { register } from "../../services/auth";
 
 // import './App.css';
 const byPropKey = (propertyName, value) => () => ({
@@ -12,13 +12,14 @@ const byPropKey = (propertyName, value) => () => ({
 const INITIAL_STATE = {
     username: '',
     email: '',
-    passwordOne: '',
-    passwordTwo: '',
+    password: '',
+    passwordConf: '',
     error: null,
 };
 
 class Register extends Component {
-    state = {...INITIAL_STATE
+    state = {
+        ...INITIAL_STATE
     };
 
     handleOpen = () => {
@@ -33,15 +34,16 @@ class Register extends Component {
         const {
             username,
             email,
-            passwordOne,
+            password,
+            passwordConf
         } = this.state;
 
-        auth.doCreateUserWithEmailAndPassword(email, passwordOne)
-            .then(authUser => {
+        register(email, password, username, passwordConf)
+            .then(result => {
                 this.setState({ ...INITIAL_STATE });
             })
             .catch(error => {
-                this.setState(byPropKey('error', error));
+                this.setState(byPropKey('error', error.response.data));
             });
 
         event.preventDefault();
@@ -54,8 +56,8 @@ class Register extends Component {
         const {
             username,
             email,
-            passwordOne,
-            passwordTwo,
+            password,
+            passwordConf,
             error,
         } = this.state;
         return (
@@ -79,7 +81,7 @@ class Register extends Component {
                             <TextField
                                 id="standard-name"
                                 label="email"
-                            className="modal-form-style"
+                                className="modal-form-style"
                                 value={email}
                                 onChange={event => this.setState(byPropKey('email', event.target.value))}
                                 margin="normal"
@@ -87,7 +89,7 @@ class Register extends Component {
                             <TextField
                                 id="standard-name"
                                 label="username"
-                            className="modal-form-style"
+                                className="modal-form-style"
                                 value={username}
                                 onChange={event => this.setState(byPropKey('username', event.target.value))}
                                 margin="normal"
@@ -95,26 +97,26 @@ class Register extends Component {
                             <TextField
                                 id="standard-uncontrolled"
                                 label="Password"
-                                value={passwordOne}
+                                value={password}
                                 type="password"
-                            className="modal-form-style"
-                                onChange={event => this.setState(byPropKey('passwordOne', event.target.value))}
+                                className="modal-form-style"
+                                onChange={event => this.setState(byPropKey('password', event.target.value))}
                                 margin="normal"
                             />
                             <TextField
                                 id="standard-uncontrolled"
                                 label="Password conf"
-                                value={passwordTwo}
+                                value={passwordConf}
                                 type="password"
-                            className="modal-form-style"
-                                onChange={event => this.setState(byPropKey('passwordTwo', event.target.value))}
+                                className="modal-form-style"
+                                onChange={event => this.setState(byPropKey('passwordConf', event.target.value))}
                                 margin="normal"
                             />
                             <Button variant="contained" color="primary" type="submit" value="Submit">
-                            Submit
+                                Submit
                         </Button>
 
-                            { error && <p>{error.message}</p> }
+                            {error && <p>{error.message}</p>}
                         </form>
                         {/*<SimpleModalWrapped />*/}
                     </div>

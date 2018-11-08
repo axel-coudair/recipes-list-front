@@ -11,3 +11,12 @@ export async function login(email, password) {
         password
     })
 }
+
+export async function register({email, password, username, passwordConf}) {
+    return axios.post(`${SERVER_URL}/users`, {
+        email,
+        password, 
+        username, 
+        passwordConf
+    })
+}
