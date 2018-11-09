@@ -5,7 +5,7 @@ import Header from './components/header'
 import RecipesList from "./components/recipesList";
 import LoginButtonModal from "./components/loginButtonModal";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './Theme'
 
 class App extends Component {
