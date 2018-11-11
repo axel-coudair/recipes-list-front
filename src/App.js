@@ -16,11 +16,14 @@ class App extends Component {
                 <MuiThemeProvider theme={theme}>
                     < div className="App">
                         <Header />
+                        <div style={{padding: 50 + 'px'}}>
+
                         <Switch>
                             <Route exact path='/' component={RecipesList} />
                             {/* both /roster and /roster/:number begin with /roster */}
                             <Route path='/roster' component={LoginButtonModal} />
                         </Switch>
+                        </div>
                     </div>
                 </MuiThemeProvider>
             </BrowserRouter>
