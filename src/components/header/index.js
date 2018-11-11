@@ -1,29 +1,64 @@
-import React, { Component } from 'react';
-import AppBar from "@material-ui/core/AppBar/AppBar";
-import Toolbar from "@material-ui/core/Toolbar/Toolbar";
+import React from 'react';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import AppBar from '@material-ui/core/AppBar';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Toolbar from '@material-ui/core/Toolbar';
+import List from '@material-ui/core/List';
+import Typography from '@material-ui/core/Typography';
+import Divider from '@material-ui/core/Divider';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemIcon from '@material-ui/core/ListItemIcon';
+import ListItemText from '@material-ui/core/ListItemText';
+import InboxIcon from '@material-ui/icons/MoveToInbox';
+import MailIcon from '@material-ui/icons/Mail';
 import IconButton from "@material-ui/core/IconButton/IconButton";
-import Button from "@material-ui/core/Button/Button";
-import Typography from "@material-ui/core/Typography/Typography";
 import MenuIcon from "@material-ui/icons/Menu";
 import LoginButtonModal from "../loginButtonModal";
 import RegisterButtonModal from "../registerButtonModal";
 import SignOutButton from "../signOutButton";
-import DrawerHolder from "../drawerHolder"
 
-class Header extends Component {
+const drawerWidth = 240;
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+    },
+    appBar: {
+        zIndex: theme.zIndex.drawer + 1,
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0,
+    },
+    drawerPaper: {
+        width: drawerWidth,
+    },
+    content: {
+        flexGrow: 1,
+        padding: theme.spacing.unit * 3,
+    },
+    toolbar: theme.mixins.toolbar,
+});
+
+class Header extends React.Component {
     state = {
-        drawerOpen: false
+        open: false
     }
 
     menuClick = () => {
-        this.setState(state => ({ drawerOpen: !state.drawerOpen }));
+        this.setState(state => ({ open: !state.open }));
     };
 
     render() {
+        const { classes } = this.props;
+
+        const { open } = this.state;
+
         return (
-            <React.Fragment>
-                <DrawerHolder open={this.state.drawerOpen} />
-                <AppBar position="static">
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         <IconButton
                             // className={classes.menuButton}
@@ -40,9 +75,36 @@ class Header extends Component {
                         <SignOutButton />
                     </Toolbar>
                 </AppBar>
-            </React.Fragment>
+                <Drawer
+                    className={classes.drawer}
+                    variant="persistent"
+                    anchor="left"
+                    open={open}
+                    classes={{
+                        paper: classes.drawerPaper,
+                    }}
+                >
+                    <div className={classes.toolbar} />
+                    <List>
+                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                            <ListItem button key={text}>
+                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                    <Divider />
+                    <List>
+                        {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                            <ListItem button key={text}>
+                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                                <ListItemText primary={text} />
+                            </ListItem>
+                        ))}
+                    </List>
+                </Drawer>
+            </div>
         );
     }
 }
-
-export default Header;
+export default withStyles(styles, { withTheme: true })(Header);
