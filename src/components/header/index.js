@@ -11,12 +11,13 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
+import HomeIcon from '@material-ui/icons/Home';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
 import LoginButtonModal from "../loginButtonModal";
 import RegisterButtonModal from "../registerButtonModal";
 import SignOutButton from "../signOutButton";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 240;
 
@@ -86,14 +87,17 @@ class Header extends React.Component {
                 >
                     <div className={classes.toolbar} />
                     <List>
-                        {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
+                        {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
+
+                            <ListItem button >
+                            <ListItemIcon><HomeIcon /></ListItemIcon>
+                            <Link to="/houses">
+                                <ListItemText primary={"Houses"} />
+                            </Link>
                             </ListItem>
-                        ))}
+                        {/* ))} */}
                     </List>
-                    <Divider />
+                    {/* <Divider />
                     <List>
                         {['All mail', 'Trash', 'Spam'].map((text, index) => (
                             <ListItem button key={text}>
@@ -101,7 +105,7 @@ class Header extends React.Component {
                                 <ListItemText primary={text} />
                             </ListItem>
                         ))}
-                    </List>
+                    </List> */}
                 </Drawer>
             </div>
         );

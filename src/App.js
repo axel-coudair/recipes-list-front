@@ -7,6 +7,7 @@ import LoginButtonModal from "./components/loginButtonModal";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './Theme'
+import HousesList from './components/housesList';
 
 class App extends Component {
     render() {
@@ -21,7 +22,7 @@ class App extends Component {
                         <Switch>
                             <Route exact path='/' component={RecipesList} />
                             {/* both /roster and /roster/:number begin with /roster */}
-                            <Route path='/roster' component={LoginButtonModal} />
+                            <Route path='/houses' component={HousesList} />
                         </Switch>
                         </div>
                     </div>
