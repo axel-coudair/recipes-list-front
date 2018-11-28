@@ -7,13 +7,14 @@ import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { getHouses } from "../../services/houses";
+import { connect } from "react-redux"
+import { addRecipe } from "../../actions/recipesActions"
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
 
 class HousesList extends Component {
-
     recipes = [
         {
             title: "Rizzoto",
@@ -36,16 +37,15 @@ class HousesList extends Component {
             image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
         },
     ]
-    componentDidMount(){
+    componentDidMount() {
         getHouses()
-        .then(result => {
-            console.log(result)
-        })
-        .catch(error => {
-            this.setState(byPropKey('error', error.response.data));
-        });
+            .then(result => {
+                console.log(result)
+            })
+            .catch(error => {
+                this.setState(byPropKey('error', error.response.data));
+            });
     }
-    
 
     render() {
         return (
@@ -73,4 +73,18 @@ class HousesList extends Component {
     }
 }
 
-export default HousesList;
+const mapStateToProps = (state) => {
+    return ({
+        recipes: state.recipesReducer
+    })
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        addRecipe: recipe => {
+            dispatch(addRecipe(recipe));
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HousesList)

@@ -13,6 +13,7 @@ import rootReducer from './reducers';
 import './App.css'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
@@ -25,13 +26,13 @@ class App extends Component {
                     <MuiThemeProvider theme={theme}>
                         < div className="App">
                             <Header />
-                            <div style={{padding: 50 + 'px'}}>
+                            <div style={{ padding: 50 + 'px' }}>
 
-                            <Switch>
-                                <Route exact path='/' component={RecipesList} />
-                                {/* both /roster and /roster/:number begin with /roster */}
-                                <Route path='/houses' component={HousesList} />
-                            </Switch>
+                                <Switch>
+                                    <Route exact path='/' component={RecipesList} />
+                                    {/* both /roster and /roster/:number begin with /roster */}
+                                    <Route path='/houses' component={HousesList} />
+                                </Switch>
                             </div>
                         </div>
                     </MuiThemeProvider>
