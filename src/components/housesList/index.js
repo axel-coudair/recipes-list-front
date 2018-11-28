@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import CardRecipes from "../cardRecipes";
 import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
-import Card from "@material-ui/core/Card/Card";
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import { getHouses } from "../../services/houses";
 import { connect } from "react-redux"
-import { addRecipe } from "../../actions/recipesActions"
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -79,12 +76,4 @@ const mapStateToProps = (state) => {
     })
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        addRecipe: recipe => {
-            dispatch(addRecipe(recipe));
-        }
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(HousesList)
+export default connect(mapStateToProps)(HousesList)

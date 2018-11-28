@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
 import Card from "@material-ui/core/Card/Card";
 import { connect } from "react-redux"
-import { addRecipe } from "../../actions/recipesActions"
+import { getRecipes } from "../../actions/recipesActions"
 import { LIST_RECIPES } from "../../actions/types"
 import Recipe from '../../models/Recipe';
 
@@ -47,7 +47,7 @@ class RecipesList extends Component {
     }
 
     render() {
-        addRecipe(this.recipes)
+        getRecipes(this.recipes)
         return (
             < div className="recipesList">
                 <Grid
@@ -78,8 +78,8 @@ const mapStateToProps = (state) => ({
 
 // const mapDispatchToProps = dispatch => {
 // return {
-//     addRecipe: recipe => {
-//         dispatch(addRecipe(recipe));
+//     getRecipes: recipe => {
+//         dispatch(getRecipes(recipe));
 //     }
 // }
 // }
