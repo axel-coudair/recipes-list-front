@@ -18,6 +18,7 @@ import LoginButtonModal from "../loginButtonModal";
 import RegisterButtonModal from "../registerButtonModal";
 import SignOutButton from "../signOutButton";
 import { Link } from "react-router-dom";
+import { connect } from "react-redux"
 
 const drawerWidth = 240;
 
@@ -42,9 +43,23 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
 });
 
+
 class Header extends React.Component {
     state = {
         open: false
+    }
+    navbarLinks() {
+        if (this.props.authenticated) {
+            return [
+                <SignOutButton />
+            ];
+        }
+        return [
+            <>
+                <LoginButtonModal />
+                <RegisterButtonModal />
+            </>
+        ];
     }
 
     menuClick = () => {
@@ -66,14 +81,16 @@ class Header extends React.Component {
                             color="inherit" aria-label="Menu" >
                             <MenuIcon onClick={this.menuClick} />
                         </IconButton>
-                        <Typography variant="h6" color="inherit"
-                        // className={classes.grow}
-                        >
-                            My Recipes List
-                    </Typography>
-                        <LoginButtonModal />
-                        <RegisterButtonModal />
-                        <SignOutButton />
+                        <Link to="/" style={{ textDecoration: 'none' }}>
+                            <Typography variant="h6" color="inherit"
+                            // className={classes.grow}
+                            >
+                                My Recipes List
+                            </Typography>
+                        </Link>
+
+                        {this.navbarLinks()}
+
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -89,12 +106,12 @@ class Header extends React.Component {
                     <List>
                         {/* {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => ( */}
 
-                            <ListItem button >
+                        <ListItem button >
                             <ListItemIcon><HomeIcon /></ListItemIcon>
                             <Link to="/houses">
                                 <ListItemText primary={"Houses"} />
                             </Link>
-                            </ListItem>
+                        </ListItem>
                         {/* ))} */}
                     </List>
                     {/* <Divider />
@@ -111,4 +128,11 @@ class Header extends React.Component {
         );
     }
 }
-export default withStyles(styles, { withTheme: true })(Header);
+function mapStateToProps(state) {
+    return {
+        authenticated: state.usersReducer.authenticated
+    };
+}
+
+// export default 
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps)(Header));

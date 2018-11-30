@@ -1,11 +1,31 @@
-import { INIT_USER_ID } from './types'
-import axios from 'axios'
-import { API_URL } from '../config'
+import { login, logout } from '../services/auth';
+import { AUTHENTICATED, AUTHENTICATION_ERROR, UNAUTHENTICATED } from './types'
 
 
-export const initUserId = () => {
-	return {
-		type: INIT_USER_ID,
-		payload: 	 Math.floor(Math.random() * (10000 - 1000) + 1000)
+export const loginAction = ({ email, password }) => {
+	return async (dispatch) => {
+		try {
+			const res = await login(email, password);
+			dispatch({ type: AUTHENTICATED });
+			localStorage.setItem('user', res.data.token);
+			// history.push('/houses');
+		} catch (error) {
+			dispatch({
+				type: AUTHENTICATION_ERROR,
+				payload: 'Invalid email or password'
+			});
+		}
+	};
+}
+export function signOutAction() {
+	return async (dispatch) => {
+		try {
+			await logout();
+			dispatch({ type: UNAUTHENTICATED });
+			localStorage.clear();
+			// this.props.history.push('/');
+		} catch (error) {
+			console.log(error)
+		}
 	}
 }

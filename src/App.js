@@ -10,13 +10,22 @@ import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';
 import rootReducer from './reducers';
+import { AUTHENTICATED } from './actions/types';
 import './App.css'
+import requireAuth from './hoc/require_auth';
+import noRequireAuth from './hoc/no_require_auth';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const store = createStore(rootReducer, composeEnhancers(
     applyMiddleware(thunk)
 ));
+
+const user = localStorage.getItem('user');
+
+if (user) {
+    store.dispatch({ type: AUTHENTICATED });
+}
 
 class App extends Component {
     render() {
@@ -29,9 +38,9 @@ class App extends Component {
                             <div style={{ padding: 50 + 'px' }}>
 
                                 <Switch>
-                                    <Route exact path='/' component={RecipesList} />
+                                    <Route exact path='/' component={noRequireAuth(RecipesList)} />
                                     {/* both /roster and /roster/:number begin with /roster */}
-                                    <Route path='/houses' component={HousesList} />
+                                    <Route path='/houses' component={requireAuth(HousesList)} />
                                 </Switch>
                             </div>
                         </div>

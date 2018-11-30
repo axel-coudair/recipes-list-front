@@ -1,8 +1,8 @@
 import axios from 'axios';
-import {SERVER_URL} from "../config";
+import { SERVER_URL } from "../config";
 
 const headers = {
-    headers: { Authorization: "Bearer " + "token" }
+    headers: { Authorization: `JWT ${localStorage.getItem("user")}` }
 };
 
 export async function getHouses() {
@@ -23,7 +23,7 @@ export async function putHousesUsers(id, user) {
     })
 }
 
-export async function register({name, adminId, password}) {
+export async function register({ name, adminId, password }) {
     return axios.post(`${SERVER_URL}/users`, {
         name,
         adminId,
