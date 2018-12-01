@@ -1,6 +1,6 @@
 import { login, logout } from '../services/auth';
 import { AUTHENTICATED, AUTHENTICATION_ERROR, UNAUTHENTICATED } from './types'
-
+import jwtDecode from "jwt-decode"
 
 export const loginAction = ({ email, password }) => {
 	return async (dispatch) => {

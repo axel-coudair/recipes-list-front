@@ -3,7 +3,6 @@ import Button from "@material-ui/core/Button/Button";
 import Typography from "@material-ui/core/Typography/Typography";
 import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
-import { login } from '../../services/auth';
 import "./style.css"
 import { connect } from "react-redux"
 import { loginAction } from "../../actions/usersActions"
@@ -108,15 +107,14 @@ class Login extends Component {
     }
 }
 
-function mapStateToProps(state) {
-    return { errorMessage: state.usersReducer.error };
-}
-const mapDispatchToProps = dispatch => {
-    return {
-        loginAction: (loginData) => {
-            dispatch(loginAction(loginData));
-        }
+const mapStateToProps = state => ({
+    errorMessage: state.usersReducer.error 
+})
+
+const mapDispatchToProps = dispatch => ({
+    loginAction: (loginData) => {
+        dispatch(loginAction(loginData));
     }
-}
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login);

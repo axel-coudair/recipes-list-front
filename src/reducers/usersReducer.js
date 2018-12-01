@@ -2,7 +2,7 @@ import { AUTHENTICATED, AUTHENTICATION_ERROR, UNAUTHENTICATED } from '../actions
 
 import User from '../models/User'
 
-export default function usersReducer(state = null, action) {
+export default function usersReducer(state = {}, action) {
 	switch (action.type) {
 		case AUTHENTICATED:
 			return { ...state, authenticated: true };

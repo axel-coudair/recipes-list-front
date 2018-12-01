@@ -14,6 +14,7 @@ import { AUTHENTICATED } from './actions/types';
 import './App.css'
 import requireAuth from './hoc/require_auth';
 import noRequireAuth from './hoc/no_require_auth';
+import Home from "./components/home"
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -38,8 +39,8 @@ class App extends Component {
                             <div style={{ padding: 50 + 'px' }}>
 
                                 <Switch>
-                                    <Route exact path='/' component={noRequireAuth(RecipesList)} />
-                                    {/* both /roster and /roster/:number begin with /roster */}
+                                    <Route exact path='/' component={noRequireAuth(Home)} />
+                                    <Route exact path='/recipes' component={requireAuth(RecipesList)} />
                                     <Route path='/houses' component={requireAuth(HousesList)} />
                                 </Switch>
                             </div>

@@ -23,11 +23,23 @@ import { connect } from "react-redux"
 const drawerWidth = 240;
 
 const styles = theme => ({
+    // root: {
+    //     display: 'flex',
+    // },
+
     root: {
-        display: 'flex',
+        flexGrow: 1,
+    },
+    grow: {
+        flexGrow: 1,
+    },
+    menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
+        flexGrow: 1,
     },
     drawer: {
         width: drawerWidth,

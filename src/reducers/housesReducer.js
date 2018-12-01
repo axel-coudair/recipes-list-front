@@ -2,7 +2,7 @@ import { GETHOUSES, GETHOUSESID, GETHOUSESUSERS, PUTHOUSESUSERS } from '../actio
 
 import House from '../models/House'
 
-export default function housesReducer(state = null, action) {
+export default function housesReducer(state = [], action) {
 	switch (action.type) {
 		case GETHOUSES:
 			return action.payload

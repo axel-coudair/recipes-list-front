@@ -1,20 +1,18 @@
 import axios from 'axios';
 import { SERVER_URL } from "../config";
+import { headers } from "../helpers"
 
-const headers = {
-    headers: { Authorization: `JWT ${localStorage.getItem("user")}` }
-};
 
 export async function getHouses() {
-    return axios.get(`${SERVER_URL}/houses`)
+    return axios.get(`${SERVER_URL}/houses`, headers)
 }
 
 export async function getHousesId(id) {
-    return axios.get(`${SERVER_URL}/houses/${id}`)
+    return axios.get(`${SERVER_URL}/houses/${id}`, headers)
 }
 
 export async function getHousesUsers(id) {
-    return axios.get(`${SERVER_URL}/houses/${id}/users`)
+    return axios.get(`${SERVER_URL}/houses/${id}/users`, headers)
 }
 
 export async function putHousesUsers(id, user) {
