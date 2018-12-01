@@ -93,13 +93,11 @@ class Header extends React.Component {
                             color="inherit" aria-label="Menu" >
                             <MenuIcon onClick={this.menuClick} />
                         </IconButton>
-                        <Link to="/" style={{ textDecoration: 'none' }}>
-                            <Typography variant="h6" color="inherit"
-                            // className={classes.grow}
-                            >
-                                My Recipes List
+                        <Typography variant="h6" color="inherit"
+                            className={classes.grow}
+                        >
+                            My Recipes List
                             </Typography>
-                        </Link>
 
                         {this.navbarLinks()}
 
