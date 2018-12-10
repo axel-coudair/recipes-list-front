@@ -1,41 +1,35 @@
 import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
-import Drawer from '@material-ui/core/Drawer';
 import AppBar from '@material-ui/core/AppBar';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Toolbar from '@material-ui/core/Toolbar';
 import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import HomeIcon from '@material-ui/icons/Home';
 import IconButton from "@material-ui/core/IconButton/IconButton";
+import Drawer from '@material-ui/core/Drawer';
+import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from "@material-ui/icons/Menu";
-import LoginButtonModal from "../loginButtonModal";
-import RegisterButtonModal from "../registerButtonModal";
-import SignOutButton from "../signOutButton";
+import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux"
+import { withRouter } from 'react-router'
+
+import LoginButtonModal from "../loginButtonModal";
+import RegisterButtonModal from "../registerButtonModal";
+import { signOutAction } from "../../actions/usersActions"
+import { Menu, MenuItem } from '@material-ui/core';
 
 const drawerWidth = 240;
 
 const styles = theme => ({
-    // root: {
-    //     display: 'flex',
-    // },
-
     root: {
         flexGrow: 1,
     },
     grow: {
         flexGrow: 1,
-    },
-    menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -58,12 +52,41 @@ const styles = theme => ({
 
 class Header extends React.Component {
     state = {
-        open: false
+        open: false,
+        openHeaderMenu: false,
+        anchorEl: null,
     }
+
     navbarLinks() {
         if (this.props.authenticated) {
             return [
-                <SignOutButton />
+                < >
+                    <IconButton
+                        aria-owns={this.state.openHeaderMenu ? 'menu-appbar' : undefined}
+                        aria-haspopup="true"
+                        onClick={this.iconHeaderClick}
+                        color="inherit"
+                    >
+                        <AccountCircle />
+                    </IconButton>
+                    <Menu
+                        id="menu-appbar"
+                        anchorEl={this.state.anchorEl}
+                        anchorOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        transformOrigin={{
+                            vertical: 'top',
+                            horizontal: 'right',
+                        }}
+                        open={this.state.openHeaderMenu}
+                        onClose={this.handleClose}
+                    >
+                        <MenuItem onClick={this.handleClose}>My account</MenuItem>
+                        <MenuItem onClick={this.props.signOutAction}>Log Out</MenuItem>
+                    </Menu>
+                </>
             ];
         }
         return [
@@ -73,14 +96,22 @@ class Header extends React.Component {
             </>
         ];
     }
+    handleClose = () => {
+        this.setState(state => ({ thianchorEl: null }));
+    };
 
+    iconHeaderClick = () => {
+        this.setState(state => ({ openHeaderMenu: !state.openHeaderMenu }));
+    };
     menuClick = () => {
         this.setState(state => ({ open: !state.open }));
+    };
+    handleMenu = event => {
+        this.setState({ anchorEl: event.currentTarget });
     };
 
     render() {
         const { classes } = this.props;
-
         const { open } = this.state;
 
         return (
@@ -89,18 +120,16 @@ class Header extends React.Component {
                 <AppBar position="fixed" className={classes.appBar}>
                     <Toolbar>
                         <IconButton
-                            // className={classes.menuButton}
                             color="inherit" aria-label="Menu" >
                             <MenuIcon onClick={this.menuClick} />
                         </IconButton>
                         <Typography variant="h6" color="inherit"
                             className={classes.grow}
+                            onClick={this.props.history.push('/recipes')}
                         >
                             My Recipes List
-                            </Typography>
-
+                        </Typography>
                         {this.navbarLinks()}
-
                     </Toolbar>
                 </AppBar>
                 <Drawer
@@ -143,6 +172,11 @@ function mapStateToProps(state) {
         authenticated: state.usersReducer.authenticated
     };
 }
+const mapDispatchToProps = dispatch => ({
+    signOutAction: () => {
+        dispatch(signOutAction());
+    }
+})
 
 // export default 
-export default withStyles(styles, { withTheme: true })(connect(mapStateToProps)(Header));
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(withRouter(Header)));

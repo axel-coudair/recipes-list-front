@@ -41,7 +41,7 @@ class App extends Component {
                                 <Switch>
                                     <Route exact path='/' component={noRequireAuth(Home)} />
                                     <Route exact path='/recipes' component={requireAuth(RecipesList)} />
-                                    <Route path='/houses' component={requireAuth(HousesList)} />
+                                    {/* <Route path='/houses' component={requireAuth(HousesList)} /> */}
                                 </Switch>
                             </div>
                         </div>
