@@ -11,8 +11,8 @@ export async function login(email, password) {
         password
     })
 }
-export async function getHouse() {
-    return axios.get(`${SERVER_URL}/houses`, headers)
+export async function getRecipesFromUser(id) {
+    return axios.get(`${SERVER_URL}/recipes/user/${id}`, headers)
 }
 
 export async function register({ email, password, username, passwordConf }) {

@@ -4,7 +4,7 @@ import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
 import Card from "@material-ui/core/Card/Card";
 import { connect } from "react-redux"
-import { getRecipes } from "../../actions/recipesActions"
+import { getRecipesAction } from "../../actions/recipesActions"
 import { LIST_RECIPES } from "../../actions/types"
 import Recipe from '../../models/Recipe';
 
@@ -41,13 +41,10 @@ class RecipesList extends Component {
     }
 
     componentDidMount() {
-        this.props.dispatch({
-            type: LIST_RECIPES, payload: this.createRecipes(this.recipes)
-        })
+        this.props.getRecipes()
     }
 
     render() {
-        getRecipes(this.recipes)
         return (
             < div className="recipesList">
                 <Grid
@@ -76,12 +73,10 @@ const mapStateToProps = (state) => ({
     recipes: state.recipesReducer
 })
 
-// const mapDispatchToProps = dispatch => {
-// return {
-//     getRecipes: recipe => {
-//         dispatch(getRecipes(recipe));
-//     }
-// }
-// }
+const mapDispatchToProps = dispatch => ({
+    getRecipes: () => {
+        dispatch(getRecipesAction());
+    }
+})
 
-export default connect(mapStateToProps)(RecipesList)
+export default connect(mapStateToProps, mapDispatchToProps)(RecipesList)

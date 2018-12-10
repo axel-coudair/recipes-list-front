@@ -1,7 +1,7 @@
 export default class Recipe {
     constructor(
         id = null,
-        houseId = null,
+        userId = null,
         title = null,
         numberOfEaters = null,
         description = null,
@@ -14,6 +14,6 @@ export default class Recipe {
         this.title = title
         this.id = id
         this.ingredients = ingredients
-        this.houseId = houseId
+        this.userId = userId
     }
 }
