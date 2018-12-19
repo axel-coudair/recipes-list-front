@@ -1,38 +1,14 @@
 import React, { Component } from 'react';
 import CardRecipes from "../cardRecipes";
-import CardNewRecipes from "../cardNewRecipes";
+import FabNewRecipes from "../fabNewRecipes";
 import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
-import Card from "@material-ui/core/Card/Card";
 import { connect } from "react-redux"
 import { getRecipesAction } from "../../actions/recipesActions"
 import { LIST_RECIPES } from "../../actions/types"
 import Recipe from '../../models/Recipe';
 
 class RecipesList extends Component {
-    recipes = [
-        {
-            title: "Rizzoto",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Carbo",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-    ]
-
     createRecipes(recipes) {
         let recipesObjects = []
         recipes.map(({ title, number }) => {
@@ -58,14 +34,12 @@ class RecipesList extends Component {
                         container
                         item md={9}
                     >
-                        <Grid item md={4} sm={6}>
-                            <CardNewRecipes />
-                        </Grid>
                         {this.props.recipes.map((recipe, i) =>
                             <Grid item md={4} sm={6} key={i}>
                                 <CardRecipes recipe={recipe} key={i} />
                             </Grid>
                         )}
+                        <FabNewRecipes />
                     </Grid>
                 </Grid>
             </div>
