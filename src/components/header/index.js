@@ -28,8 +28,11 @@ const styles = theme => ({
     root: {
         flexGrow: 1,
     },
-    grow: {
+    headerTitle: {
         flexGrow: 1,
+        textDecoration: "none",
+        color: "white"
+
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -123,12 +126,14 @@ class Header extends React.Component {
                             color="inherit" aria-label="Menu" >
                             <MenuIcon onClick={this.menuClick} />
                         </IconButton>
-                        <Typography variant="h6" color="inherit"
-                            className={classes.grow}
-                            onClick={this.props.history.push('/recipes')}
-                        >
-                            My Recipes List
-                        </Typography>
+                        <Link to="/recipes" className={classes.headerTitle}>
+                            <Typography variant="h6" color="inherit"
+                            // className={classes.grow}
+                            // onClick={this.props.history.push('/recipes')}
+                            >
+                                My Recipes List
+                            </Typography>
+                        </Link>
                         {this.navbarLinks()}
                     </Toolbar>
                 </AppBar>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import CardRecipes from "../cardRecipes";
+import CardNewRecipes from "../cardNewRecipes";
 import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
 import Card from "@material-ui/core/Card/Card";
@@ -57,6 +58,9 @@ class RecipesList extends Component {
                         container
                         item md={9}
                     >
+                        <Grid item md={4} sm={6}>
+                            <CardNewRecipes />
+                        </Grid>
                         {this.props.recipes.map((recipe, i) =>
                             <Grid item md={4} sm={6} key={i}>
                                 <CardRecipes recipe={recipe} key={i} />

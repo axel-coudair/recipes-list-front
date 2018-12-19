@@ -20,9 +20,9 @@ export const loginAction = ({ email, password }) => {
 export function signOutAction() {
 	return async (dispatch) => {
 		try {
+			localStorage.clear();
 			await logout();
 			dispatch({ type: UNAUTHENTICATED });
-			localStorage.clear();
 			// this.props.history.push('/');
 		} catch (error) {
 			console.log(error)
