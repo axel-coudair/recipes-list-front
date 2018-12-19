@@ -7,6 +7,12 @@ import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import TextField from "@material-ui/core/TextField/TextField";
 import { withStyles } from '@material-ui/core/styles';
+import Input from '@material-ui/core/Input';
+import MenuItem from '@material-ui/core/MenuItem';
+import Select from '@material-ui/core/Select';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
 
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
@@ -14,7 +20,7 @@ const byPropKey = (propertyName, value) => () => ({
 const INITIAL_STATE = {
     userId: "",
     title: "",
-    numberOfEaters: 0,
+    numberOfEaters: null,
     description: "",
     isPublic: "",
     ingredients: "",
@@ -72,17 +78,38 @@ class FabNewRecipes extends Component {
                     <div className="modal-style" >
                         <Typography variant="h6" id="modal-title">
                             Create new recipe
-                </Typography>
+                        </Typography>
                         <form onSubmit={this.handleSubmit}>
                             <TextField
-                                label="title"
+                                label="Title"
                                 className="modal-form-style"
                                 value={title}
                                 onChange={event => this.setState(byPropKey('title', event.target.value))}
                                 margin="normal"
                             />
+                            <FormControl className={classes.formControl + " modal-form-style"}>
+                                <InputLabel htmlFor="numberOfEatersId">Nombre de Personnes</InputLabel>
+                                <Select
+                                    value={numberOfEaters}
+                                    onChange={event => this.setState(byPropKey('numberOfEaters', event.target.value))}
+                                    inputProps={{
+                                        name: 'age',
+                                        id: 'numberOfEatersId',
+                                    }}
+                                >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={1}>1</MenuItem>
+                                    <MenuItem value={2}>2</MenuItem>
+                                    <MenuItem value={3}>3</MenuItem>
+                                    <MenuItem value={4}>4</MenuItem>
+                                    <MenuItem value={5}>5</MenuItem>
+                                    <MenuItem value={6}>6</MenuItem>
+                                </Select>
+                            </FormControl>
                             <TextField
-                                label="description"
+                                label="Description"
                                 className="modal-form-style"
                                 value={description}
                                 onChange={event => this.setState(byPropKey('description', event.target.value))}
