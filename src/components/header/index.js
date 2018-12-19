@@ -128,8 +128,6 @@ class Header extends React.Component {
                         </IconButton>
                         <Link to="/recipes" className={classes.headerTitle}>
                             <Typography variant="h6" color="inherit"
-                            // className={classes.grow}
-                            // onClick={this.props.history.push('/recipes')}
                             >
                                 My Recipes List
                             </Typography>

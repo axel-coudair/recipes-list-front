@@ -27,6 +27,15 @@ class CardRecipes extends Component {
         ...INITIAL_STATE
     };
 
+    handleOpen = () => {
+        this.setState({ open: true });
+    };
+
+    handleClose = () => {
+        this.setState({ open: false });
+    };
+
+
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
@@ -56,7 +65,7 @@ class CardRecipes extends Component {
                     </CardContent>
                 </Card> */}
 
-                <Fab color="primary" aria-label="Add" >
+                <Fab color="primary" aria-label="Add" onClick={this.handleOpen}>
                     <AddIcon />
                 </Fab>
                 <Modal

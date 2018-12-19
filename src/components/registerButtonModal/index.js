@@ -74,9 +74,6 @@ class Register extends Component {
                         <Typography variant="h6" id="modal-title">
                             Register
                         </Typography>
-                        {/* <Typography variant="subtitle1" id="simple-modal-description">
-                            Re
-                        </Typography> */}
                         <form onSubmit={this.handleSubmit}>
                             <TextField
                                 id="standard-name"
@@ -115,10 +112,8 @@ class Register extends Component {
                             <Button variant="contained" color="primary" type="submit" value="Submit">
                                 Submit
                         </Button>
-
                             {error && <p>{error.message}</p>}
                         </form>
-                        {/*<SimpleModalWrapped />*/}
                     </div>
                 </Modal>
             </>
