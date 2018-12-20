@@ -109,7 +109,7 @@ class Register extends Component {
                                 onChange={event => this.setState(byPropKey('passwordConf', event.target.value))}
                                 margin="normal"
                             />
-                            <Button variant="contained" color="primary" type="submit" value="Submit">
+                            <Button variant="contained" className="modal-form-style" color="primary" type="submit" value="Submit">
                                 Submit
                         </Button>
                             {error && <p>{error.message}</p>}
