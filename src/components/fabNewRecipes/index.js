@@ -1,38 +1,35 @@
 import React, { Component } from 'react';
-import Grid from "@material-ui/core/Grid/Grid";
 import Button from "@material-ui/core/Button/Button";
-import IconButton from "@material-ui/core/IconButton/IconButton";
 import Typography from "@material-ui/core/Typography/Typography";
-import Modal from "@material-ui/core/Modal/Modal";
 import AddIcon from '@material-ui/icons/Add';
 import Fab from '@material-ui/core/Fab';
 import TextField from "@material-ui/core/TextField/TextField";
 import { withStyles } from '@material-ui/core/styles';
-import Input from '@material-ui/core/Input';
 import MenuItem from '@material-ui/core/MenuItem';
 import Select from '@material-ui/core/Select';
-import FormHelperText from '@material-ui/core/FormHelperText';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
-import Divider from '@material-ui/core/Divider';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
+import Switch from '@material-ui/core/Switch';
+import FormControlLabel from '@material-ui/core/FormControlLabel';
+import Grid from "@material-ui/core/Grid/Grid";
 
 import Ingredient from '../../models/Ingredient'
-
-const byPropKey = (propertyName, value) => () => ({
-    [propertyName]: value,
-});
+import IngredientSelector from '../ingredientSelector'
+import Recipe from '../../models/Recipe';
+import { postRecipeAction } from "../../actions/recipesActions"
+import { connect } from "react-redux"
 
 const INITIAL_STATE = {
     userId: "",
     title: "",
-    numberOfEaters: null,
+    numberOfEaters: "",
     description: "",
-    isPublic: "",
+    isPublic: false,
     ingredients: [],
     error: null
 };
@@ -53,7 +50,7 @@ class FabNewRecipes extends Component {
     };
 
     addIngredient = () => {
-        this.setState({ ingredients: [...this.state.ingredients, new Ingredient()] });
+        this.setState({ ingredients: [...this.state.ingredients, new Ingredient(null, "", null, "", false)] });
     };
 
     handleOpen = () => {
@@ -67,6 +64,37 @@ class FabNewRecipes extends Component {
     handleExpandClick = () => {
         this.setState(state => ({ expanded: !state.expanded }));
     };
+
+    handleChange = event => {
+        this.setState({ [event.target.name]: event.target.value });
+    };
+
+    handleCheckChange = event => {
+        this.setState({ [event.target.name]: event.target.checked });
+    };
+
+    myCallback = (dataFromChild, key) => {
+        this.state.ingredients[key] = dataFromChild
+    }
+
+    handleSubmit = (event) => {
+        const {
+            title,
+            numberOfEaters,
+            description,
+            isPublic,
+            ingredients
+        } = this.state;
+
+        this.props.postRecipeAction({
+            title,
+            numberOfEaters,
+            description,
+            isPublic,
+            ingredients
+        });
+        event.preventDefault();
+    }
 
     render() {
 
@@ -86,33 +114,42 @@ class FabNewRecipes extends Component {
                     <AddIcon />
                     ADD NEW RECIPE
                 </Fab>
-                {/* <Modal 
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
+                <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
+                    aria-labelledby="form-dialog-title"
                 >
-                    <div className="modal-style" >
-                        <Typography variant="h5" id="modal-title">
-                            Create new recipe
-                        </Typography>
+                    <DialogTitle id="form-dialog-title">Create new recipe</DialogTitle>
+                    <DialogContent>
+                        {/* <DialogContentText>
+                            To subscribe to this website, please enter your email address here. We will send
+                            updates occasionally.
+                        </DialogContentText> */}
+
                         <form onSubmit={this.handleSubmit}>
                             <TextField
                                 label="Title"
-                                className="modal-form-style"
+                                name="title"
+                                autoFocus
+                                margin="dense"
+                                fullWidth
                                 value={title}
-                                onChange={event => this.setState(byPropKey('title', event.target.value))}
-                                margin="normal"
+                                onChange={this.handleChange}
                             />
-                            <FormControl margin="normal" className={classes.formControl + " modal-form-style"}>
+                            <FormControl
+                                autoFocus
+                                margin="dense"
+                                fullWidth>
                                 <InputLabel htmlFor="numberOfEatersId">Nombre de Personnes</InputLabel>
                                 <Select
+                                    name="numberOfEaters"
                                     value={numberOfEaters}
-                                    onChange={event => this.setState(byPropKey('numberOfEaters', event.target.value))}
+                                    onChange={this.handleChange}
                                     inputProps={{
-                                        name: 'age',
+                                        name: 'numberOfEaters',
                                         id: 'numberOfEatersId',
                                     }}
+
                                 >
                                     <MenuItem value="">
                                         <em>None</em>
@@ -129,7 +166,8 @@ class FabNewRecipes extends Component {
                                 label="Description"
                                 className="modal-form-style"
                                 value={description}
-                                onChange={event => this.setState(byPropKey('description', event.target.value))}
+                                name="description"
+                                onChange={this.handleChange}
                                 margin="normal"
                             />
                             {}
@@ -138,145 +176,42 @@ class FabNewRecipes extends Component {
                             </Typography>
 
                             {ingredients.map((ingredient, i) =>
-                                <>
-                                    <Divider variant="middle" />
-                                    <Grid
-                                        container
-                                        direction="row"
-                                        margin="normal"
-                                        justify="center"
-                                        alignItems="flex-start"
-                                    >
-                                        <Grid
-                                            item md={4}
-                                        >
-                                            <TextField
-                                                label="Nom"
-                                                className="modal-form-style"
-                                                value={ingredient.name}
-                                                onChange={event => this.setState(byPropKey('ingredient.name', event.target.value))}
-                                                margin="normal"
-                                                key={i}
-                                            />
-                                        </Grid>
-                                        <Grid
-                                            item md={4}
-                                        >
-                                            <TextField
-                                                label="Unité"
-                                                className="modal-form-style"
-                                                value={ingredient.name}
-                                                onChange={event => this.setState(byPropKey('ingredient.unit', event.target.value))}
-                                                margin="normal"
-                                                key={i}
-                                            />
-                                        </Grid>
-                                        <Grid
-                                            item md={3}
-                                        >
-                                            <FormControl margin="normal" className={classes.formControl + " modal-form-style"}>
-                                                <InputLabel htmlFor="numberOfEatersId">Quantité</InputLabel>
-                                                <Select
-                                                    value={ingredient.quantity}
-                                                    inputProps={{
-                                                        name: 'age',
-                                                        id: 'numberOfEatersId',
-                                                    }}
-                                                >
-                                                    <MenuItem value="">
-                                                        <em>None</em>
-                                                    </MenuItem>
-                                                    <MenuItem value={1}>1</MenuItem>
-                                                    <MenuItem value={2}>2</MenuItem>
-                                                    <MenuItem value={3}>3</MenuItem>
-                                                    <MenuItem value={4}>4</MenuItem>
-                                                    <MenuItem value={5}>5</MenuItem>
-                                                    <MenuItem value={6}>6</MenuItem>
-                                                </Select>
-                                            </FormControl>
-                                        </Grid>
-                                    </Grid>
-                                </>
+                                <IngredientSelector
+                                    callbackFromParent={this.myCallback}
+                                    ingredient={ingredient}
+                                    key={i}
+                                    number={i}
+                                />
                             )}
 
-                            <Fab color="primary" variant="extended" className={classes.fab} aria-label="Add" onClick={this.addIngredient}>
+                            <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addIngredient}>
                                 <AddIcon />
                                 ADD NEW INGREDIENT
                             </Fab>
-
-                            <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addIngredient}>
-                                <AddIcon />
-                                Submit
-                            </Fab>
-                            <Button variant="contained" className="modal-form-style" color="primary" type="submit" value="Submit">
-                                Submit
-                            </Button> 
-
-                            {error && <p>{error.message}</p>}
-                        </form>
-                    </div>
-                </Modal> */}
-                <Dialog
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Create new recipe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We will send
-                            updates occasionally.
-                        </DialogContentText>
-
-                        <form onSubmit={this.handleSubmit}>
-                            <TextField
-                                label="Title"
-                                autoFocus
-                                margin="dense"
-                                fullWidth
-                                value={title}
-                                onChange={event => this.setState(byPropKey('title', event.target.value))}
-                            />
-                            <FormControl
-                                autoFocus
-                                margin="dense"
-                                fullWidth>
-                                <InputLabel htmlFor="numberOfEatersId">Nombre de Personnes</InputLabel>
-                                <Select
-                                    value={numberOfEaters}
-                                    onChange={event => this.setState(byPropKey('numberOfEaters', event.target.value))}
-                                    inputProps={{
-                                        name: 'age',
-                                        id: 'numberOfEatersId',
-                                    }}
-                                >
-                                    <MenuItem value="">
-                                        <em>None</em>
-                                    </MenuItem>
-                                    <MenuItem value={1}>1</MenuItem>
-                                    <MenuItem value={2}>2</MenuItem>
-                                    <MenuItem value={3}>3</MenuItem>
-                                    <MenuItem value={4}>4</MenuItem>
-                                    <MenuItem value={5}>5</MenuItem>
-                                    <MenuItem value={6}>6</MenuItem>
-                                </Select>
-                            </FormControl>
-                            <TextField
-                                label="Description"
-                                className="modal-form-style"
-                                value={description}
-                                onChange={event => this.setState(byPropKey('description', event.target.value))}
+                            <Grid
+                                container
+                                direction="row"
                                 margin="normal"
-                            />
-                            {}
-                            <Typography id="modal-title" margin="normal" variant="h6" className={ingredients.length ? "" : classes.hideIngredient}>
-                                Ingredients
-                            </Typography>
-
-                            <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addIngredient}>
-                                <AddIcon />
-                                ADD NEW INGREDIENT
-                            </Fab>
+                                justify="center"
+                                alignItems="flex-start"
+                            >
+                                <Grid
+                                    item md={12}
+                                >
+                                    <FormControlLabel
+                                        label="Do you want to make your recipe public ?"
+                                        control={
+                                            <Switch
+                                                checked={isPublic}
+                                                name="isPublic"
+                                                onChange={this.handleCheckChange}
+                                                color="primary"
+                                            />
+                                        }
+                                    />
+                                </Grid>
+                            </Grid>
+                            {error && <p>{error.message}</p>}
                         </form>
 
                     </DialogContent>
@@ -284,16 +219,20 @@ class FabNewRecipes extends Component {
                         <Button onClick={this.handleClose} color="primary">
                             Cancel
                         </Button>
-                        <Button onClick={this.handleClose} type="submit" value="Submit" color="primary">
+                        <Button onClick={this.handleSubmit} type="submit" value="Submit" color="primary">
                             Submit
                         </Button>
                     </DialogActions>
                 </Dialog>
-
-
             </>
         );
     }
 }
 
-export default withStyles(styles, { withTheme: true })(FabNewRecipes);
+const mapDispatchToProps = dispatch => ({
+    postRecipeAction: (recipe) => {
+        dispatch(postRecipeAction(recipe));
+    }
+})
+
+export default connect(null, mapDispatchToProps)(withStyles(styles, { withTheme: true })(FabNewRecipes));

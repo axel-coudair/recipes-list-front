@@ -5,21 +5,23 @@ const headers = {
     headers: { Authorization: `JWT ${localStorage.getItem("user")}` }
 };
 
-export async function login(email, password) {
-    return axios.post(`${SERVER_URL}/users/sign-in`, {
-        email,
-        password
-    })
-}
 export async function getRecipesFromUser(id) {
     return axios.get(`${SERVER_URL}/recipes/user/${id}`, headers)
 }
 
-export async function register({ email, password, username, passwordConf }) {
-    return axios.post(`${SERVER_URL}/users`, {
-        email,
-        password,
-        username,
-        passwordConf
-    })
+export async function postRecipe({
+    title,
+    description,
+    isPublic,
+    userId,
+    numberOfEaters,
+    ingredients }) {
+    return axios.post(`${SERVER_URL}/recipes`, {
+        title,
+        description,
+        isPublic,
+        userId,
+        numberOfEaters,
+        ingredients
+    }, headers)
 }
