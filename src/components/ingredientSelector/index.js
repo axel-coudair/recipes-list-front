@@ -7,8 +7,6 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Divider from '@material-ui/core/Divider';
 
-import Ingredient from '../../models/Ingredient'
-
 class IngredientSelector extends Component {
 
     handleChange = event => {

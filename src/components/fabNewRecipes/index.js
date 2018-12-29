@@ -12,7 +12,6 @@ import InputLabel from '@material-ui/core/InputLabel';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Switch from '@material-ui/core/Switch';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
@@ -20,9 +19,9 @@ import Grid from "@material-ui/core/Grid/Grid";
 
 import Ingredient from '../../models/Ingredient'
 import IngredientSelector from '../ingredientSelector'
-import Recipe from '../../models/Recipe';
 import { postRecipeAction } from "../../actions/recipesActions"
 import { connect } from "react-redux"
+import update from 'react-addons-update';
 
 const INITIAL_STATE = {
     userId: "",
@@ -74,7 +73,10 @@ class FabNewRecipes extends Component {
     };
 
     myCallback = (dataFromChild, key) => {
-        this.state.ingredients[key] = dataFromChild
+        this.setState({
+            ingredients: update(this.state.items, { [key]: dataFromChild })
+        })
+        // this.state.ingredients[key] = dataFromChild
     }
 
     handleSubmit = (event) => {
@@ -110,10 +112,14 @@ class FabNewRecipes extends Component {
 
         return (
             <>
-                <Fab color="primary" variant="extended" className={classes.fabNewRecipe} aria-label="Add" onClick={this.handleOpen}>
-                    <AddIcon />
-                    ADD NEW RECIPE
-                </Fab>
+                <Grid container justify="center" className={classes.fabNewRecipe} >
+                    <Grid item>
+                        <Fab color="primary" variant="extended" aria-label="Add" onClick={this.handleOpen}>
+                            <AddIcon />
+                            ADD NEW RECIPE
+                        </Fab>
+                    </Grid>
+                </Grid>
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}

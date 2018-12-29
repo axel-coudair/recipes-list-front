@@ -5,17 +5,8 @@ import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
 import { connect } from "react-redux"
 import { getRecipesAction } from "../../actions/recipesActions"
-import { LIST_RECIPES } from "../../actions/types"
-import Recipe from '../../models/Recipe';
 
 class RecipesList extends Component {
-    createRecipes(recipes) {
-        let recipesObjects = []
-        recipes.map(({ title, number }) => {
-            recipesObjects.push(new Recipe(null, null, title, number, "jkhkjhkjf jshjk", false, null))
-        })
-        return recipesObjects
-    }
 
     componentDidMount() {
         this.props.getRecipes()

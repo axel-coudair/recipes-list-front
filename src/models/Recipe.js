@@ -6,6 +6,10 @@ export default class Recipe {
         numberOfEaters = null,
         description = null,
         isPublic = null,
+        image = null,
+        date = null,
+        duration = null,
+        stapes = null,
         ingredients = null
     ) {
         this.isPublic = isPublic
@@ -13,7 +17,21 @@ export default class Recipe {
         this.numberOfEaters = numberOfEaters
         this.title = title
         this.id = id
+        this.image = image
+        this.date = date
+        this.duration = duration
+        this.stapes = stapes
         this.ingredients = ingredients
         this.userId = userId
+    }
+
+    static createFromJson = (recipes) => {
+        return recipes.map(({
+            id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
+        }) => {
+            return new Recipe(
+                id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
+            )
+        })
     }
 }

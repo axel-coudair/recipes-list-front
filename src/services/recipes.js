@@ -15,6 +15,10 @@ export async function postRecipe({
     isPublic,
     userId,
     numberOfEaters,
+    image,
+    date,
+    duration,
+    stapes,
     ingredients }) {
     return axios.post(`${SERVER_URL}/recipes`, {
         title,
@@ -22,6 +26,10 @@ export async function postRecipe({
         isPublic,
         userId,
         numberOfEaters,
+        image,
+        date,
+        duration,
+        stapes,
         ingredients
     }, headers)
 }

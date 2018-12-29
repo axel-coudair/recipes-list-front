@@ -5,7 +5,6 @@ import RecipesList from "./components/recipesList";
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { MuiThemeProvider } from '@material-ui/core/styles';
 import theme from './Theme'
-import HousesList from './components/housesList';
 import { createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import { Provider } from 'react-redux';

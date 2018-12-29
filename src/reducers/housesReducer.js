@@ -1,7 +1,5 @@
 import { GETHOUSES, GETHOUSESID, GETHOUSESUSERS, PUTHOUSESUSERS } from '../actions/types'
 
-import House from '../models/House'
-
 export default function housesReducer(state = [], action) {
 	switch (action.type) {
 		case GETHOUSES:
