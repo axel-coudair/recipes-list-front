@@ -11,7 +11,15 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { withStyles } from '@material-ui/core/styles';
 import "./style.css";
+
+const styles = theme => ({
+    media: {
+        height: 0,
+        paddingTop: '56.25%', // 16:9
+    }
+});
 
 class CardRecipes extends Component {
     state = {
@@ -24,7 +32,8 @@ class CardRecipes extends Component {
 
     render() {
         const {
-            recipe
+            recipe,
+            classes
         } = this.props;
 
         return (
@@ -39,7 +48,7 @@ class CardRecipes extends Component {
                     subheader={new Date(recipe.date).toDateString()}
                 />
                 <CardMedia
-                    // className={classes.media}
+                    className={classes.media}
                     image={recipe.image}
                     title="Contemplative Reptile"
                 />
@@ -88,4 +97,4 @@ class CardRecipes extends Component {
     }
 }
 
-export default CardRecipes;
+export default withStyles(styles)(CardRecipes);
