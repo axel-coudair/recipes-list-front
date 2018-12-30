@@ -11,14 +11,12 @@ class IngredientSelector extends Component {
 
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
+        this.props.callbackFromParent(this.state, this.props.number);
     };
 
     state = this.props.ingredient
 
     render() {
-        console.log(this.props)
-        this.props.callbackFromParent(this.state, this.props.number);
-
         const {
             name,
             unit,

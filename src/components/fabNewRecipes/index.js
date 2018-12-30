@@ -65,16 +65,24 @@ class FabNewRecipes extends Component {
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+    handleChange2 = key => event => {
+        const name = event.target.name
+        const value = event.target.value
+        this.setState(prevState => {
+            prevState[name][key] = value;
+            return prevState
+        });
+    };
 
     handleCheckChange = event => {
         this.setState({ [event.target.name]: event.target.checked });
     };
 
     myCallback = (dataFromChild, key) => {
-        // this.setState({
-        //     ingredients: update(this.state.ingredients, { [key]: dataFromChild })
-        // })
-        this.state.ingredients[key] = dataFromChild
+        this.setState(prevState => {
+            prevState.ingredients[key] = dataFromChild;
+            return prevState
+        });
     }
 
     handleSubmit = (event) => {
@@ -193,9 +201,9 @@ class FabNewRecipes extends Component {
                                     key={i}
                                     className="modal-form-style"
                                     value={stape}
-                                    name="stape"
+                                    name="stapes"
                                     multiline
-                                    onChange={this.handleChange}
+                                    onChange={this.handleChange2(i)}
                                     margin="normal"
                                 />
 
@@ -218,6 +226,7 @@ class FabNewRecipes extends Component {
                                 <IngredientSelector
                                     callbackFromParent={this.myCallback}
                                     ingredient={ingredient}
+                                    name="ingredients"
                                     key={i}
                                     number={i}
                                 />
