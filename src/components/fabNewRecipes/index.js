@@ -21,35 +21,32 @@ import Ingredient from '../../models/Ingredient'
 import IngredientSelector from '../ingredientSelector'
 import { postRecipeAction } from "../../actions/recipesActions"
 import { connect } from "react-redux"
-import update from 'react-addons-update';
+import Recipe from '../../models/Recipe';
 
-const INITIAL_STATE = {
-    userId: "",
-    title: "",
-    numberOfEaters: "",
-    description: "",
-    isPublic: false,
-    ingredients: [],
-    error: null
-};
 const styles = theme => ({
-    fabNewRecipe: {
-        position: 'absolute',
+    fabsGrid: {
         bottom: theme.spacing.unit * 2,
         right: theme.spacing.unit * 2,
     },
-    hideIngredient: {
+    fabsGridNewRecipe: {
+        bottom: theme.spacing.unit * 2,
+        right: theme.spacing.unit * 2,
+        position: 'absolute',
+    },
+    hideArraysTitles: {
         display: "none"
     }
 });
 
 class FabNewRecipes extends Component {
-    state = {
-        ...INITIAL_STATE
-    };
+    state = new Recipe()
 
     addIngredient = () => {
         this.setState({ ingredients: [...this.state.ingredients, new Ingredient(null, "", null, "", false)] });
+    };
+
+    addStape = () => {
+        this.setState({ stapes: [...this.state.stapes, ""] });
     };
 
     handleOpen = () => {
@@ -57,6 +54,7 @@ class FabNewRecipes extends Component {
     };
 
     handleClose = () => {
+        this.setState(new Recipe())
         this.setState({ open: false });
     };
 
@@ -73,10 +71,10 @@ class FabNewRecipes extends Component {
     };
 
     myCallback = (dataFromChild, key) => {
-        this.setState({
-            ingredients: update(this.state.items, { [key]: dataFromChild })
-        })
-        // this.state.ingredients[key] = dataFromChild
+        // this.setState({
+        //     ingredients: update(this.state.ingredients, { [key]: dataFromChild })
+        // })
+        this.state.ingredients[key] = dataFromChild
     }
 
     handleSubmit = (event) => {
@@ -99,20 +97,10 @@ class FabNewRecipes extends Component {
     }
 
     render() {
-
         const { classes } = this.props;
-        const {
-            title,
-            numberOfEaters,
-            description,
-            isPublic,
-            ingredients,
-            error
-        } = this.state;
-
         return (
             <>
-                <Grid container justify="center" className={classes.fabNewRecipe} >
+                <Grid container justify="center" className={classes.fabsGridNewRecipe} >
                     <Grid item>
                         <Fab color="primary" variant="extended" aria-label="Add" onClick={this.handleOpen}>
                             <AddIcon />
@@ -139,7 +127,7 @@ class FabNewRecipes extends Component {
                                 autoFocus
                                 margin="dense"
                                 fullWidth
-                                value={title}
+                                value={this.state.title}
                                 onChange={this.handleChange}
                             />
                             <FormControl
@@ -149,7 +137,7 @@ class FabNewRecipes extends Component {
                                 <InputLabel htmlFor="numberOfEatersId">Nombre de Personnes</InputLabel>
                                 <Select
                                     name="numberOfEaters"
-                                    value={numberOfEaters}
+                                    value={this.state.numberOfEaters}
                                     onChange={this.handleChange}
                                     inputProps={{
                                         name: 'numberOfEaters',
@@ -171,17 +159,62 @@ class FabNewRecipes extends Component {
                             <TextField
                                 label="Description"
                                 className="modal-form-style"
-                                value={description}
+                                value={this.state.description}
                                 name="description"
+                                multiline
                                 onChange={this.handleChange}
                                 margin="normal"
                             />
-                            {}
-                            <Typography id="modal-title" margin="normal" variant="h6" className={ingredients.length ? "" : classes.hideIngredient}>
+                            <TextField
+                                label="Image url"
+                                className="modal-form-style"
+                                value={this.state.image}
+                                name="image"
+                                onChange={this.handleChange}
+                                margin="normal"
+                            />
+                            <TextField
+                                label="Duration"
+                                className="modal-form-style"
+                                value={this.state.duration}
+                                name="duration"
+                                onChange={this.handleChange}
+                                type="number"
+                                margin="normal"
+                            />
+                            <Typography id="modal-title" margin="normal" variant="h6" className={this.state.stapes.length ? "" : classes.hideArraysTitles}>
+                                Étapes
+                            </Typography>
+
+                            {this.state.stapes.map((stape, i) =>
+
+                                <TextField
+                                    label={"Étape: " + (i + 1)}
+                                    key={i}
+                                    className="modal-form-style"
+                                    value={stape}
+                                    name="stape"
+                                    multiline
+                                    onChange={this.handleChange}
+                                    margin="normal"
+                                />
+
+                            )}
+
+                            <Grid container justify="center" className={classes.fabsGrid}>
+                                <Grid item>
+                                    <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addStape}>
+                                        <AddIcon />
+                                        NOUVELLE ÉTAPE
+                                    </Fab>
+                                </Grid>
+                            </Grid>
+
+                            <Typography id="modal-title" margin="normal" variant="h6" className={this.state.ingredients.length ? "" : classes.hideArraysTitles}>
                                 Ingredients
                             </Typography>
 
-                            {ingredients.map((ingredient, i) =>
+                            {this.state.ingredients.map((ingredient, i) =>
                                 <IngredientSelector
                                     callbackFromParent={this.myCallback}
                                     ingredient={ingredient}
@@ -190,10 +223,14 @@ class FabNewRecipes extends Component {
                                 />
                             )}
 
-                            <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addIngredient}>
-                                <AddIcon />
-                                ADD NEW INGREDIENT
-                            </Fab>
+                            <Grid container justify="center" className={classes.fabsGrid}>
+                                <Grid item>
+                                    <Fab color="primary" variant="extended" className="modal-form-style" aria-label="Add" onClick={this.addIngredient}>
+                                        <AddIcon />
+                                        ADD NEW INGREDIENT
+                                    </Fab>
+                                </Grid>
+                            </Grid>
                             <Grid
                                 container
                                 direction="row"
@@ -208,7 +245,7 @@ class FabNewRecipes extends Component {
                                         label="Do you want to make your recipe public ?"
                                         control={
                                             <Switch
-                                                checked={isPublic}
+                                                checked={this.state.isPublic}
                                                 name="isPublic"
                                                 onChange={this.handleCheckChange}
                                                 color="primary"
@@ -217,7 +254,7 @@ class FabNewRecipes extends Component {
                                     />
                                 </Grid>
                             </Grid>
-                            {error && <p>{error.message}</p>}
+                            {this.state.error && <p>{this.state.error.message}</p>}
                         </form>
 
                     </DialogContent>

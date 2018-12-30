@@ -9,8 +9,8 @@ export default class Recipe {
         image = null,
         date = null,
         duration = null,
-        stapes = null,
-        ingredients = null
+        stapes = [],
+        ingredients = []
     ) {
         this.isPublic = isPublic
         this.description = description
