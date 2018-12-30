@@ -10,8 +10,8 @@ import Collapse from "@material-ui/core/Collapse/Collapse";
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { withStyles } from '@material-ui/core/styles';
+import MenuRecipe from '../menuRecipe'
 import "./style.css";
 
 const styles = theme => ({
@@ -40,9 +40,7 @@ class CardRecipes extends Component {
             <Card className="cardRecipes">
                 <CardHeader
                     action={
-                        <IconButton>
-                            <MoreVertIcon />
-                        </IconButton>
+                        <MenuRecipe />
                     }
                     title={recipe.title}
                     subheader={new Date(recipe.date).toDateString()}

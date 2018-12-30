@@ -63,7 +63,7 @@ class Register extends Component {
         return (
             <>
                 {/*<Typography gutterBottom>Click to get the full Modal experience!</Typography>*/}
-                <Button onClick={this.handleOpen}>Register</Button>
+                <Button onClick={this.handleOpen} color="inherit">Register</Button>
                 <Modal
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"

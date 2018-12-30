@@ -16,11 +16,13 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux"
 import { withRouter } from 'react-router'
+import { Menu, MenuItem } from '@material-ui/core';
 
 import LoginButtonModal from "../loginButtonModal";
 import RegisterButtonModal from "../registerButtonModal";
 import { signOutAction } from "../../actions/usersActions"
-import { Menu, MenuItem } from '@material-ui/core';
+import MenuProfil from "../menuProfil"
+
 
 const drawerWidth = 240;
 
@@ -62,35 +64,7 @@ class Header extends React.Component {
 
     navbarLinks() {
         if (this.props.authenticated) {
-            return [
-                < >
-                    <IconButton
-                        aria-owns={this.state.openHeaderMenu ? 'menu-appbar' : undefined}
-                        aria-haspopup="true"
-                        onClick={this.iconHeaderClick}
-                        color="inherit"
-                    >
-                        <AccountCircle />
-                    </IconButton>
-                    <Menu
-                        id="menu-appbar"
-                        anchorEl={this.state.anchorEl}
-                        anchorOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        transformOrigin={{
-                            vertical: 'top',
-                            horizontal: 'right',
-                        }}
-                        open={this.state.openHeaderMenu}
-                        onClose={this.handleClose}
-                    >
-                        <MenuItem onClick={this.handleClose}>My account</MenuItem>
-                        <MenuItem onClick={this.props.signOutAction}>Log Out</MenuItem>
-                    </Menu>
-                </>
-            ];
+            return <MenuProfil />
         }
         return [
             <>
@@ -175,11 +149,6 @@ function mapStateToProps(state) {
         authenticated: state.usersReducer.authenticated
     };
 }
-const mapDispatchToProps = dispatch => ({
-    signOutAction: () => {
-        dispatch(signOutAction());
-    }
-})
 
 // export default 
-export default withStyles(styles, { withTheme: true })(connect(mapStateToProps, mapDispatchToProps)(withRouter(Header)));
+export default withStyles(styles, { withTheme: true })(connect(mapStateToProps)(withRouter(Header)));
