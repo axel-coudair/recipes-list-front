@@ -14,22 +14,20 @@ export async function postRecipe({
     description,
     isPublic,
     userId,
-    numberOfEaters,
     image,
-    date,
     duration,
     stapes,
+    numberOfEaters,
     ingredients }) {
     return axios.post(`${SERVER_URL}/recipes`, {
         title,
         description,
         isPublic,
         userId,
-        numberOfEaters,
         image,
-        date,
         duration,
         stapes,
+        numberOfEaters,
         ingredients
     }, headers)
 }

@@ -4,22 +4,13 @@ import Recipe from '../models/Recipe';
 import { getIdCurrentUser } from "../helpers"
 import { postRecipe } from "../services/recipes"
 
-export const postRecipeAction = ({ title,
-	numberOfEaters,
-	description,
-	isPublic,
-	ingredients }) => {
+export const postRecipeAction = (recipe) => {
 
 	return async (dispatch) => {
 		try {
-			const res = await postRecipe({
-				title,
-				description,
-				isPublic,
-				userId: getIdCurrentUser(),
-				numberOfEaters,
-				ingredients
-			});
+
+			recipe.userId = getIdCurrentUser();
+			const res = await postRecipe(recipe);
 			// const res = await getRecipesFromUser(getIdCurrentUser());
 
 			console.log(res)

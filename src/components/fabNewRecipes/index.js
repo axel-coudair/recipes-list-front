@@ -31,7 +31,7 @@ const styles = theme => ({
     fabsGridNewRecipe: {
         bottom: theme.spacing.unit * 2,
         right: theme.spacing.unit * 2,
-        position: 'absolute',
+        position: 'fixed',
     },
     hideArraysTitles: {
         display: "none"
@@ -86,21 +86,7 @@ class FabNewRecipes extends Component {
     }
 
     handleSubmit = (event) => {
-        const {
-            title,
-            numberOfEaters,
-            description,
-            isPublic,
-            ingredients
-        } = this.state;
-
-        this.props.postRecipeAction({
-            title,
-            numberOfEaters,
-            description,
-            isPublic,
-            ingredients
-        });
+        this.props.postRecipeAction(this.state);
         event.preventDefault();
     }
 
@@ -206,7 +192,6 @@ class FabNewRecipes extends Component {
                                     onChange={this.handleChange2(i)}
                                     margin="normal"
                                 />
-
                             )}
 
                             <Grid container justify="center" className={classes.fabsGrid}>
