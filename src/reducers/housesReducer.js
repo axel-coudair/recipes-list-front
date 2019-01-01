@@ -1,15 +1,20 @@
-import { GETHOUSES, GETHOUSESID, GETHOUSESUSERS, PUTHOUSESUSERS } from '../actions/types'
+import {
+	GETHOUSES,
+	GETHOUSESID,
+	GETHOUSESUSERS,
+	PUTHOUSESUSERS
+} from '../actions/types'
 
 export default function housesReducer(state = [], action) {
 	switch (action.type) {
 		case GETHOUSES:
 			return action.payload
 		case GETHOUSESID:
-			return action.payload;
+			return action.payload
 		case GETHOUSESUSERS:
-			return action.payload;
+			return action.payload
 		case PUTHOUSESUSERS:
-			return action.payload;
+			return action.payload
 		default:
 			return state
 	}
