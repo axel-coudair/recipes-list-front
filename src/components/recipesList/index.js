@@ -1,66 +1,49 @@
-import React, {Component} from 'react';
-import CardRecipes from "../cardRecipes";
-import Grid from "@material-ui/core/Grid/Grid";
-import "./style.css"
-import Card from "@material-ui/core/Card/Card";
+import React, { Component } from 'react'
+import CardRecipes from '../cardRecipes'
+import ModalEditRecipe from '../modalEditRecipe'
+import Grid from '@material-ui/core/Grid/Grid'
+import './style.css'
+import { connect } from 'react-redux'
+import { getRecipesAction } from '../../actions/recipesActions'
 
 class RecipesList extends Component {
+	componentDidMount() {
+		this.props.getRecipes()
+	}
 
-    recipes = [
-        {
-            title: "Rizzoto",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Carbo",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-        {
-            title: "Pates",
-            image: "https://f.wszelkieprzepisy.pl/images/ywoj5xrm/rizotto-miesno-warzywne-orig.png"
-        },
-    ]
-
-    render() {
-        return (
-            < div className="recipesList">
-                <Grid
-                    container
-                    direction="row"
-                    justify="center"
-                    alignItems="flex-start"
-                >
-                    <Grid
-                        container
-                        item md={9}
-                    >
-                        {/*<Grid item md={4} sm={6}>*/}
-                        {/*<Card className="cardRecipes">*/}
-                        {/*+*/}
-                        {/*</Card>*/}
-
-                        {/*</Grid>*/}
-                        {this.recipes.map((recipe, i) =>
-
-                            <Grid item md={4} sm={6} key={i}>
-
-                                <CardRecipes recipe={recipe} key={i}/>
-
-                            </Grid>
-                        )}
-                    </Grid>
-                </Grid>
-            </div>
-        );
-    }
+	render() {
+		return (
+			<div className="recipesList">
+				<Grid
+					container
+					direction="row"
+					justify="center"
+					alignItems="flex-start">
+					<Grid container item md={9}>
+						{this.props.recipes.map((recipe, i) => (
+							<Grid item md={4} sm={6} key={i}>
+								<CardRecipes recipe={recipe} key={i} />
+							</Grid>
+						))}
+						<ModalEditRecipe />
+					</Grid>
+				</Grid>
+			</div>
+		)
+	}
 }
 
-export default RecipesList;
+const mapStateToProps = state => ({
+	recipes: state.recipesReducer
+})
+
+const mapDispatchToProps = dispatch => ({
+	getRecipes: () => {
+		dispatch(getRecipesAction())
+	}
+})
+
+export default connect(
+	mapStateToProps,
+	mapDispatchToProps
+)(RecipesList)

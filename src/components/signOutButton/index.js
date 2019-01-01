@@ -1,13 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react'
+import Button from '@material-ui/core/Button/Button'
+import { signOutAction } from '../../actions/usersActions'
+import { connect } from 'react-redux'
+import { Typography } from '@material-ui/core'
 
-import { auth } from '../../firebase';
+class SignOutButton extends Component {
+	render() {
+		return (
+			<Typography type="button" onClick={this.props.signOutAction}>
+				Sign Out
+			</Typography>
+		)
+	}
+}
 
-const SignOutButton = () =>
-    <button
-        type="button"
-        onClick={auth.doSignOut}
-    >
-        Sign Out
-    </button>
+const mapDispatchToProps = dispatch => {
+	return {
+		signOutAction: () => {
+			dispatch(signOutAction())
+		}
+	}
+}
 
-export default SignOutButton;
+export default connect(
+	null,
+	mapDispatchToProps
+)(SignOutButton)
