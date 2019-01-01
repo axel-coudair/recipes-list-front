@@ -12,15 +12,12 @@ import IconButton from "@material-ui/core/IconButton/IconButton";
 import Drawer from '@material-ui/core/Drawer';
 import HomeIcon from '@material-ui/icons/Home';
 import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux"
 import { withRouter } from 'react-router'
-import { Menu, MenuItem } from '@material-ui/core';
 
 import LoginButtonModal from "../loginButtonModal";
 import RegisterButtonModal from "../registerButtonModal";
-import { signOutAction } from "../../actions/usersActions"
 import MenuProfil from "../menuProfil"
 
 
@@ -34,7 +31,6 @@ const styles = theme => ({
         flexGrow: 1,
         textDecoration: "none",
         color: "white"
-
     },
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
@@ -54,7 +50,6 @@ const styles = theme => ({
     toolbar: theme.mixins.toolbar,
 });
 
-
 class Header extends React.Component {
     state = {
         open: false,
@@ -73,18 +68,9 @@ class Header extends React.Component {
             </>
         ];
     }
-    handleClose = () => {
-        this.setState(state => ({ thianchorEl: null }));
-    };
 
-    iconHeaderClick = () => {
-        this.setState(state => ({ openHeaderMenu: !state.openHeaderMenu }));
-    };
     menuClick = () => {
         this.setState(state => ({ open: !state.open }));
-    };
-    handleMenu = event => {
-        this.setState({ anchorEl: event.currentTarget });
     };
 
     render() {
@@ -144,6 +130,7 @@ class Header extends React.Component {
         );
     }
 }
+
 function mapStateToProps(state) {
     return {
         authenticated: state.usersReducer.authenticated

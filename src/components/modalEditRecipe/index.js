@@ -59,13 +59,10 @@ class ModalEditRecipe extends Component {
         this.setState({ open: false });
     };
 
-    handleExpandClick = () => {
-        this.setState(state => ({ expanded: !state.expanded }));
-    };
-
     handleChange = event => {
         this.setState({ [event.target.name]: event.target.value });
     };
+
     handleChange2 = key => event => {
         const name = event.target.name
         const value = event.target.value

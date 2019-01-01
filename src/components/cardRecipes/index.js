@@ -7,8 +7,6 @@ import CardMedia from "@material-ui/core/CardMedia/CardMedia";
 import CardContent from "@material-ui/core/CardContent/CardContent";
 import CardActions from "@material-ui/core/CardActions/CardActions";
 import Collapse from "@material-ui/core/Collapse/Collapse";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { withStyles } from '@material-ui/core/styles';
 import MenuRecipe from '../menuRecipe'
@@ -23,12 +21,19 @@ const styles = theme => ({
 
 class CardRecipes extends Component {
     state = {
-        expanded: false
+        expanded: false,
+			ingredientExpanded: false
     };
 
-    handleExpandClick = () => {
-        this.setState(state => ({ expanded: !state.expanded }));
-    };
+  //   handleExpandClick = (event) => {
+  //
+	// 	this.setState(state => ({ expanded: !state.expanded }));
+	// };
+
+	handleExpandClick = name => {
+		console.log(name)
+		this.setState({ [name]: !this.state[name]});
+	};
 
     render() {
         const {
@@ -64,32 +69,58 @@ class CardRecipes extends Component {
                     {/*<IconButton aria-label="Share">*/}
                         {/*<ShareIcon />*/}
                     {/*</IconButton>*/}
-                    <IconButton
-                        // className={classnames(classes.expand, {
-                        //     [classes.expandOpen]: this.state.expanded,
-                        // })}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="Show more"
-                    >
-                        <ExpandMoreIcon />
-                    </IconButton>
+									<IconButton
+                    // className={classnames(classes.expand, {
+                    //     [classes.expandOpen]: this.state.expanded,
+                    // })}
+										onClick={() => this.handleExpandClick("expanded")}
+										name="expanded"
+										aria-expanded={this.state.expanded}
+										aria-label="Show more"
+									>
+										<ExpandMoreIcon color='inherit' />
+									</IconButton>
+									<IconButton
+                    // className={classnames(classes.expand, {
+                    //     [classes.expandOpen]: this.state.expanded,
+                    // })}
+										onClick={() => this.handleExpandClick("ingredientExpanded")}
+                    name="ingredientExpanded"
+										aria-expanded={this.state.ingredientExpanded}
+										aria-label="Show more"
+									>
+										<ExpandMoreIcon />
+									</IconButton>
                 </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph variant="subtitle1">Etape:</Typography>
-                        {recipe.stapes.map((stape, i) =>
-                            <>
-                                <Typography paragraph variant="subtitle2" key={i}>
-                                    {i + 1}
-                                </Typography>
-                                <Typography paragraph key={i}>
-                                    {stape}
-                                </Typography>
-                            </>
-                        )}
-                    </CardContent>
-                </Collapse>
+							<Collapse in={this.state.ingredientExpanded} timeout="auto" unmountOnExit>
+								<CardContent>
+									<Typography paragraph variant="subtitle1">Ingredients:</Typography>
+									{recipe.ingredients.map((ingredient, i) =>
+                    <>
+											<Typography paragraph key={i}>
+												{ingredient.quantity+ " "}
+												{ingredient.unit+ " "}
+												{ingredient.name+ " "}
+											</Typography>
+                    </>
+									)}
+								</CardContent>
+							</Collapse>
+							<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+								<CardContent>
+									<Typography paragraph variant="subtitle1">Etape:</Typography>
+									{recipe.stapes.map((stape, i) =>
+                    <>
+											<Typography paragraph variant="subtitle2" key={i}>
+												{i + 1}
+											</Typography>
+											<Typography paragraph key={i}>
+												{stape}
+											</Typography>
+                    </>
+									)}
+								</CardContent>
+							</Collapse>
             </Card>
         );
     }
