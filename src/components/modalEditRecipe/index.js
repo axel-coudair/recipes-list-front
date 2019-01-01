@@ -120,10 +120,6 @@ class ModalEditRecipe extends Component {
 										<DialogTitle id="form-dialog-title">Update recipe</DialogTitle>
 									}
                     <DialogContent>
-                        {/* <DialogContentText>
-                            To subscribe to this website, please enter your email address here. We will send
-                            updates occasionally.
-                        </DialogContentText> */}
 
                         <form onSubmit={this.handleSubmit}>
                             <TextField

@@ -25,11 +25,6 @@ class CardRecipes extends Component {
 			ingredientExpanded: false
     };
 
-  //   handleExpandClick = (event) => {
-  //
-	// 	this.setState(state => ({ expanded: !state.expanded }));
-	// };
-
 	handleExpandClick = name => {
 		console.log(name)
 		this.setState({ [name]: !this.state[name]});

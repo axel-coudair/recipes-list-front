@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Button from "@material-ui/core/Button/Button";
-import Typography from "@material-ui/core/Typography/Typography";
-import Modal from "@material-ui/core/Modal/Modal";
 import TextField from "@material-ui/core/TextField/TextField";
 import { register } from "../../services/auth";
+import DialogTitle from '@material-ui/core/DialogTitle/DialogTitle'
+import DialogContent from '@material-ui/core/DialogContent/DialogContent'
+import Dialog from '@material-ui/core/Dialog/Dialog'
 
-// import './App.css';
 const byPropKey = (propertyName, value) => () => ({
     [propertyName]: value,
 });
+
 const INITIAL_STATE = {
     username: '',
     email: '',
@@ -64,16 +65,13 @@ class Register extends Component {
             <>
                 {/*<Typography gutterBottom>Click to get the full Modal experience!</Typography>*/}
                 <Button onClick={this.handleOpen} color="inherit">Register</Button>
-                <Modal
-                    aria-labelledby="simple-modal-title"
-                    aria-describedby="simple-modal-description"
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                >
-                    <div className="modal-style" >
-                        <Typography variant="h6" id="modal-title">
-                            Register
-                        </Typography>
+							<Dialog
+								open={this.state.open}
+								onClose={this.handleClose}
+								aria-labelledby="form-dialog-title"
+							>
+              <DialogTitle id="form-dialog-title">Register</DialogTitle>
+								<DialogContent>
                         <form onSubmit={this.handleSubmit}>
                             <TextField
                                 id="standard-name"
@@ -114,8 +112,8 @@ class Register extends Component {
                         </Button>
                             {error && <p>{error.message}</p>}
                         </form>
-                    </div>
-                </Modal>
+                </DialogContent>
+              </Dialog>
             </>
         );
     }
