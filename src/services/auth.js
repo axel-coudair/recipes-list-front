@@ -1,15 +1,22 @@
-import axios from 'axios';
-import {SERVER_URL} from "../../config";
+import axios from 'axios'
+import { SERVER_URL } from '../config'
+import { headers } from '../helpers'
 
-function login(email, password) {
-    axios.post(`${SERVER_URL}/users/sign-in`, {
-        email,
-        password
-    }).then((result, err ) =>{
-        console.log(err)
-        console.log(result)
-    })
+export async function login(email, password) {
+	return axios.post(`${SERVER_URL}/users/sign-in`, {
+		email,
+		password
+	})
 }
-module.exports = {
-    login
-};
+export async function logout() {
+	return axios.get(`${SERVER_URL}/users/logout`, headers)
+}
+
+export async function register({ email, password, username, passwordConf }) {
+	return axios.post(`${SERVER_URL}/users`, {
+		email,
+		password,
+		username,
+		passwordConf
+	})
+}

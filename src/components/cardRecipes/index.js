@@ -1,104 +1,122 @@
-import React, {Component} from 'react';
-import IconButton from "@material-ui/core/IconButton/IconButton";
-import Typography from "@material-ui/core/Typography/Typography";
-import Card from "@material-ui/core/Card/Card";
-import CardHeader from "@material-ui/core/CardHeader/CardHeader";
-import CardMedia from "@material-ui/core/CardMedia/CardMedia";
-import CardContent from "@material-ui/core/CardContent/CardContent";
-import CardActions from "@material-ui/core/CardActions/CardActions";
-import Collapse from "@material-ui/core/Collapse/Collapse";
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import "./style.css"
+import React, { Component } from 'react'
+import IconButton from '@material-ui/core/IconButton/IconButton'
+import Typography from '@material-ui/core/Typography/Typography'
+import Card from '@material-ui/core/Card/Card'
+import CardHeader from '@material-ui/core/CardHeader/CardHeader'
+import CardMedia from '@material-ui/core/CardMedia/CardMedia'
+import CardContent from '@material-ui/core/CardContent/CardContent'
+import CardActions from '@material-ui/core/CardActions/CardActions'
+import Collapse from '@material-ui/core/Collapse/Collapse'
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
+import { withStyles } from '@material-ui/core/styles'
+import MenuRecipe from '../menuRecipe'
+import './style.css'
 
-    ;
-
-// import './App.css';
+const styles = theme => ({
+	media: {
+		height: 0,
+		paddingTop: '56.25%' // 16:9
+	}
+})
 
 class CardRecipes extends Component {
-    state = {
-        expanded: false
-    };
+	state = {
+		expanded: false,
+		ingredientExpanded: false
+	}
 
-    handleExpandClick = () => {
-        this.setState(state => ({expanded: !state.expanded}));
-    };
+	handleExpandClick = name => {
+		console.log(name)
+		this.setState({ [name]: !this.state[name] })
+	}
 
-    render() {
-        return (
-            <Card className="cardRecipes">
-                <CardHeader
-                    action={
-                        <IconButton>
-                            <MoreVertIcon/>
-                        </IconButton>
-                    }
-                    title={this.props.recipe.title}
-                    subheader="September 14, 2016"
-                />
-                <CardMedia
-                    // className={classes.media}
-                    image="/static/images/cards/paella.jpg"
-                    title="Contemplative Reptile"
-                />
-                <CardContent>
-                    <Typography component="p">
-                        This impressive paella is a perfect party dish and a fun meal to cook together with your
-                        guests. Add 1 cup of frozen peas along with the mussels, if you like.
-                    </Typography>
-                </CardContent>
-                <CardActions
-                    // className={classes.actions}
-                    disableActionSpacing>
-                    <IconButton aria-label="Add to favorites">
-                        <FavoriteIcon/>
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                        <ShareIcon/>
-                    </IconButton>
-                    <IconButton
-                        // className={classnames(classes.expand, {
-                        //     [classes.expandOpen]: this.state.expanded,
-                        // })}
-                        onClick={this.handleExpandClick}
-                        aria-expanded={this.state.expanded}
-                        aria-label="Show more"
-                    >
-                        <ExpandMoreIcon/>
-                    </IconButton>
-                </CardActions>
-                <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <Typography paragraph>Method:</Typography>
-                        <Typography paragraph>
-                            Heat 1/2 cup of the broth in a pot until simmering, add saffron and set aside for 10
-                            minutes.
-                        </Typography>
-                        <Typography paragraph>
-                            Heat oil in a (14- to 16-inch) paella pan or a large, deep skillet over medium-high
-                            heat. Add chicken, shrimp and chorizo, and cook, stirring occasionally until lightly
-                            browned, 6 to 8 minutes. Transfer shrimp to a large plate and set aside, leaving
-                            chicken and chorizo in the pan. Add pimentón, bay leaves, garlic, tomatoes, onion,
-                            salt and pepper, and cook, stirring often until thickened and fragrant, about 10
-                            minutes. Add saffron broth and remaining 4 1/2 cups chicken broth; bring to a boil.
-                        </Typography>
-                        <Typography paragraph>
-                            Add rice and stir very gently to distribute. Top with artichokes and peppers, and cook
-                            without stirring, until most of the liquid is absorbed, 15 to 18 minutes. Reduce heat
-                            to medium-low, add reserved shrimp and mussels, tucking them down into the rice, and
-                            cook again without stirring, until mussels have opened and rice is just tender, 5 to 7
-                            minutes more. (Discard any mussels that don’t open.)
-                        </Typography>
-                        <Typography>
-                            Set aside off of the heat to let rest for 10 minutes, and then serve.
-                        </Typography>
-                    </CardContent>
-                </Collapse>
-            </Card>
-        );
-    }
+	render() {
+		const { recipe, classes } = this.props
+
+		return (
+			<Card className="cardRecipes">
+				<CardHeader
+					action={<MenuRecipe recipe={recipe} />}
+					title={recipe.title}
+					subheader={new Date(recipe.date).toDateString()}
+				/>
+				<CardMedia
+					className={classes.media}
+					image={recipe.image}
+					title="Contemplative Reptile"
+				/>
+				<CardContent>
+					<Typography component="p">{recipe.description}</Typography>
+				</CardContent>
+				<CardActions
+					// className={classes.actions}
+					disableActionSpacing>
+					{/*<IconButton aria-label="Add to favorites">*/}
+					{/*<FavoriteIcon />*/}
+					{/*</IconButton>*/}
+					{/*<IconButton aria-label="Share">*/}
+					{/*<ShareIcon />*/}
+					{/*</IconButton>*/}
+					<IconButton
+						// className={classnames(classes.expand, {
+						//     [classes.expandOpen]: this.state.expanded,
+						// })}
+						onClick={() => this.handleExpandClick('expanded')}
+						name="expanded"
+						aria-expanded={this.state.expanded}
+						aria-label="Show more">
+						<ExpandMoreIcon color="inherit" />
+					</IconButton>
+					<IconButton
+						// className={classnames(classes.expand, {
+						//     [classes.expandOpen]: this.state.expanded,
+						// })}
+						onClick={() => this.handleExpandClick('ingredientExpanded')}
+						name="ingredientExpanded"
+						aria-expanded={this.state.ingredientExpanded}
+						aria-label="Show more">
+						<ExpandMoreIcon />
+					</IconButton>
+				</CardActions>
+				<Collapse
+					in={this.state.ingredientExpanded}
+					timeout="auto"
+					unmountOnExit>
+					<CardContent>
+						<Typography paragraph variant="subtitle1">
+							Ingredients:
+						</Typography>
+						{recipe.ingredients.map((ingredient, i) => (
+							<>
+								<Typography paragraph key={i}>
+									{ingredient.quantity + ' '}
+									{ingredient.unit + ' '}
+									{ingredient.name + ' '}
+								</Typography>
+							</>
+						))}
+					</CardContent>
+				</Collapse>
+				<Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+					<CardContent>
+						<Typography paragraph variant="subtitle1">
+							Etape:
+						</Typography>
+						{recipe.stapes.map((stape, i) => (
+							<>
+								<Typography paragraph variant="subtitle2" key={i}>
+									{i + 1}
+								</Typography>
+								<Typography paragraph key={i}>
+									{stape}
+								</Typography>
+							</>
+						))}
+					</CardContent>
+				</Collapse>
+			</Card>
+		)
+	}
 }
 
-export default CardRecipes;
+export default withStyles(styles)(CardRecipes)
