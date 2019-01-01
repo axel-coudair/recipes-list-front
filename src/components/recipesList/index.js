@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import CardRecipes from "../cardRecipes";
-import FabNewRecipes from "../fabNewRecipes";
+import ModalEditRecipe from "../modalEditRecipe";
 import Grid from "@material-ui/core/Grid/Grid";
 import "./style.css"
 import { connect } from "react-redux"
@@ -30,7 +30,7 @@ class RecipesList extends Component {
                                 <CardRecipes recipe={recipe} key={i} />
                             </Grid>
                         )}
-                        <FabNewRecipes />
+                        <ModalEditRecipe />
                     </Grid>
                 </Grid>
             </div>

@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import { Menu, MenuItem } from '@material-ui/core';
 import IconButton from "@material-ui/core/IconButton/IconButton";
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-
+import {deleteRecipe} from '../../services/recipes'
+import { getRecipesAction } from '../../actions/recipesActions'
+import connect from 'react-redux/es/connect/connect'
+import ModalEditRecipe from '../modalEditRecipe'
 
 class MenuRecipe extends Component {
     state = {
@@ -13,8 +16,13 @@ class MenuRecipe extends Component {
         this.setState({ anchorEl: event.currentTarget });
     };
 
-    handleClose = () => {
-        this.setState({ anchorEl: null });
+	handleClose = () => {
+		this.setState({ anchorEl: null });
+	};
+
+	  delete = () => {
+			deleteRecipe(this.props.recipe.id);
+			this.props.getRecipes()
     };
 
     render() {
@@ -36,11 +44,17 @@ class MenuRecipe extends Component {
                     onClose={this.handleClose}
                 >
                     <MenuItem onClick={this.delete}>Delete</MenuItem>
-                    <MenuItem onClick={this.update}>Update</MenuItem>
+                    <ModalEditRecipe recipe={this.props.recipe}/>
                 </Menu>
             </>
         );
     }
 }
 
-export default MenuRecipe;
+const mapDispatchToProps = dispatch => ({
+	getRecipes: () => {
+		dispatch(getRecipesAction());
+	}
+})
+
+export default connect(null, mapDispatchToProps)(MenuRecipe)

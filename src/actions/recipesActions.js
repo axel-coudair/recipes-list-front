@@ -20,7 +20,7 @@ export const postRecipeAction = (recipe) => {
 	};
 }
 
-export const getRecipesAction = recipe => {
+export const getRecipesAction = () => {
 	return async (dispatch) => {
 		try {
 			const res = await getRecipesFromUser(getIdCurrentUser());

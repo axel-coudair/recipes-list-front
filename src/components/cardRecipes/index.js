@@ -40,7 +40,7 @@ class CardRecipes extends Component {
             <Card className="cardRecipes">
                 <CardHeader
                     action={
-                        <MenuRecipe />
+                        <MenuRecipe recipe={recipe}/>
                     }
                     title={recipe.title}
                     subheader={new Date(recipe.date).toDateString()}
@@ -58,12 +58,12 @@ class CardRecipes extends Component {
                 <CardActions
                     // className={classes.actions}
                     disableActionSpacing>
-                    <IconButton aria-label="Add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
-                    <IconButton aria-label="Share">
-                        <ShareIcon />
-                    </IconButton>
+                    {/*<IconButton aria-label="Add to favorites">*/}
+                        {/*<FavoriteIcon />*/}
+                    {/*</IconButton>*/}
+                    {/*<IconButton aria-label="Share">*/}
+                        {/*<ShareIcon />*/}
+                    {/*</IconButton>*/}
                     <IconButton
                         // className={classnames(classes.expand, {
                         //     [classes.expandOpen]: this.state.expanded,

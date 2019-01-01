@@ -1,6 +1,6 @@
 export default class Recipe {
     constructor(
-        id = null,
+			_id = null,
         userId = null,
         title = null,
         numberOfEaters = null,
@@ -16,7 +16,7 @@ export default class Recipe {
         this.description = description
         this.numberOfEaters = numberOfEaters
         this.title = title
-        this.id = id
+        this.id = _id
         this.image = image
         this.date = date
         this.duration = duration
@@ -27,10 +27,10 @@ export default class Recipe {
 
     static createFromJson = (recipes) => {
         return recipes.map(({
-            id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
+            _id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
         }) => {
             return new Recipe(
-                id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
+                _id, houseId, title, numberOfEaters, description, isPublic, image, date, duration, stapes, ingredients
             )
         })
     }

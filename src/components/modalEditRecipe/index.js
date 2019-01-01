@@ -19,9 +19,10 @@ import Grid from "@material-ui/core/Grid/Grid";
 
 import Ingredient from '../../models/Ingredient'
 import IngredientSelector from '../ingredientSelector'
-import { postRecipeAction } from "../../actions/recipesActions"
+import { getRecipesAction, postRecipeAction } from '../../actions/recipesActions'
 import { connect } from "react-redux"
 import Recipe from '../../models/Recipe';
+import { updateRecipe } from '../../services/recipes'
 
 const styles = theme => ({
     fabsGrid: {
@@ -38,8 +39,8 @@ const styles = theme => ({
     }
 });
 
-class FabNewRecipes extends Component {
-    state = new Recipe()
+class ModalEditRecipe extends Component {
+    state = this.props.recipe || new Recipe()
 
     addIngredient = () => {
         this.setState({ ingredients: [...this.state.ingredients, new Ingredient(null, "", null, "", false)] });
@@ -86,14 +87,21 @@ class FabNewRecipes extends Component {
     }
 
     handleSubmit = (event) => {
-        this.props.postRecipeAction(this.state);
-        event.preventDefault();
+			if(!this.props.hasOwnProperty('recipe') ){
+				this.props.postRecipeAction(this.state);
+			} else {
+				updateRecipe(this.state.id, this.state)
+			}
+			this.props.getRecipes();
+			event.preventDefault();
+			this.handleClose()
     }
 
     render() {
         const { classes } = this.props;
         return (
             <>
+							{!this.props.hasOwnProperty('recipe') ?
                 <Grid container justify="center" className={classes.fabsGridNewRecipe} >
                     <Grid item>
                         <Fab color="primary" variant="extended" aria-label="Add" onClick={this.handleOpen}>
@@ -101,13 +109,19 @@ class FabNewRecipes extends Component {
                             ADD NEW RECIPE
                         </Fab>
                     </Grid>
-                </Grid>
+                </Grid> :
+							<MenuItem onClick={this.handleOpen}>Update</MenuItem>
+							}
                 <Dialog
                     open={this.state.open}
                     onClose={this.handleClose}
                     aria-labelledby="form-dialog-title"
                 >
+									{!this.props.hasOwnProperty('recipe') ?
                     <DialogTitle id="form-dialog-title">Create new recipe</DialogTitle>
+										:
+										<DialogTitle id="form-dialog-title">Update recipe</DialogTitle>
+									}
                     <DialogContent>
                         {/* <DialogContentText>
                             To subscribe to this website, please enter your email address here. We will send
@@ -269,7 +283,10 @@ class FabNewRecipes extends Component {
 const mapDispatchToProps = dispatch => ({
     postRecipeAction: (recipe) => {
         dispatch(postRecipeAction(recipe));
+    },
+    getRecipes: () => {
+        dispatch(getRecipesAction());
     }
 })
 
-export default connect(null, mapDispatchToProps)(withStyles(styles, { withTheme: true })(FabNewRecipes));
+export default connect(null, mapDispatchToProps)(withStyles(styles, { withTheme: true })(ModalEditRecipe));

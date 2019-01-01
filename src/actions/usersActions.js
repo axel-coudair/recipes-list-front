@@ -7,7 +7,8 @@ export const loginAction = ({ email, password }) => {
 			const res = await login(email, password);
 			dispatch({ type: AUTHENTICATED });
 			localStorage.setItem('user', res.data.token);
-			// history.push('/houses');
+			window.location.reload();
+
 		} catch (error) {
 			dispatch({
 				type: AUTHENTICATION_ERROR,
@@ -22,7 +23,7 @@ export function signOutAction() {
 			localStorage.clear();
 			await logout();
 			dispatch({ type: UNAUTHENTICATED });
-			// this.props.history.push('/');
+			window.location.reload();
 		} catch (error) {
 			console.log(error)
 		}
